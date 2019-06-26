@@ -17,7 +17,11 @@ let szamlalo = 0;
 let randomSzamok = [3, 6, 9];
 
 array[5][2] = 7;
-array[0][0] = 7;
+array[7][5] = 7;
+array[10][16] = 7;
+array[6][2] = 'X';
+array[8][5] = 'X';
+array[11][16] = 'X';
 
 const main = () => {
   var interval = setInterval(function () {
