@@ -9,19 +9,24 @@ stdin.on('data', (key1) => {
 });
 let tombmuv = require('./tomb.js');
 let asteroids = require('./asteroids.js');
+let asteroids2 = require('./asteroids2.js');
 
 let tomb = tombmuv.generate2d(20, 20);
 let array = tombmuv.fill2DArray(tomb);
 let szamlalo = 0;
 let randomSzamok = [3, 6, 9];
 
+array[5][2] = 7;
+array[0][0] = 7;
+
 const main = () => {
   var interval = setInterval(function () {
     console.clear();
     szamlalo++;
-    asteroids.asteroidLeft1(array, randomSzamok[0]);
-    asteroids.asteroidLeft1(array, randomSzamok[1]);
-    asteroids.asteroidLeft1(array, randomSzamok[2]);
+    // asteroids.asteroidLeft1(array, randomSzamok[0]);
+    // asteroids.asteroidLeft1(array, randomSzamok[1]);
+    // asteroids.asteroidLeft1(array, randomSzamok[2]);
+    asteroids2.asteroidLeft1(array);
     tombmuv.matrixKiiratas(array);
     console.log('Szamlalo:', szamlalo);
     if (szamlalo % 21 === 0) {
