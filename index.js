@@ -8,7 +8,7 @@ stdin.on('data', (key1) => {
   }
 });
 let createBoard = require('./array.js');
-let asteroids2 = require('./asteroids.js');
+let asteroid = require('./asteroids.js');
 
 let board = createBoard.fill2DArray(createBoard.generate2d(20, 20));
 let iteration = 0;
@@ -24,8 +24,8 @@ const main = () => {
   setInterval(function () {
     console.clear();
     iteration++;
-    asteroids2.asteroidLeft(board);
-    asteroids2.asteroidRight(board);
+    asteroid.asteroidLeft(board);
+    asteroid.asteroidRight(board);
     createBoard.printMatrix(board);
     console.log('iteration:', iteration);
     /* if (iteration % 21 === 0) {
