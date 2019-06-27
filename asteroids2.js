@@ -1,4 +1,5 @@
 const asteroidLeft1 = (arr) => {
+  let temp;
   let numberOfAsteroids = 0;
   let segedArray = [];
   for (let i = 0; i < arr.length; i++) {
@@ -14,10 +15,12 @@ const asteroidLeft1 = (arr) => {
     let y = segedArray.pop();
     let x = segedArray.pop();
     if (y === arr[0].length - 1) {
-      arr[x][y] = 0;
+      arr[x][y] = ' ';
+    } else if (arr[x][y + 1] === 'X') {
     } else {
+      temp = arr[x][y + 1];
       arr[x][y + 1] = arr[x][y];
-      arr[x][y] = 0;
+      arr[x][y] = temp;
     }
   }
   while (numberOfAsteroids < 5) {
@@ -40,13 +43,15 @@ const asteroidRight = (arr) => {
     }
   }
   while (segedArray.length !== 0) {
+    let temp;
     let y = segedArray.pop();
     let x = segedArray.pop();
     if (y === 0) { // átirtam
-      arr[x][y] = 0;
+      arr[x][y] = ' ';
     } else {
+      temp = arr[x][y - 1];
       arr[x][y - 1] = arr[x][y];
-      arr[x][y] = 0;
+      arr[x][y] = temp;
     }
   }
   while (numberOfAsteroids < 5) {
