@@ -9,7 +9,7 @@ const generate2d = (n, m) => {
 const fill2DArray = (tomb) => {
   for (let i = 0; i < tomb.length; i++) {
     for (let j = 0; j < tomb[i].length; j++) {
-      tomb[i][j] = ' ';
+      tomb[i][j] = 0;
     }
   }
   return tomb;

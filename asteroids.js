@@ -15,7 +15,7 @@ const asteroidLeft = (arr) => {
     let y = tempArray.pop();
     let x = tempArray.pop();
     if (y === arr[0].length - 1) {
-      arr[x][y] = ' ';
+      arr[x][y] = 0;
     } else if (arr[x][y + 1] === 'X') {
     } else {
       temp = arr[x][y + 1];
@@ -35,7 +35,7 @@ const asteroidRight = (arr) => {
   let tempArray = [];
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 'X') { // átirtam
+      if (arr[i][j] === 'X') {
         tempArray.push(i);
         tempArray.push(j);
         numberOfAsteroids++;
@@ -46,8 +46,8 @@ const asteroidRight = (arr) => {
     let temp;
     let y = tempArray.pop();
     let x = tempArray.pop();
-    if (y === 0) { // átirtam
-      arr[x][y] = ' ';
+    if (y === 0) {
+      arr[x][y] = 0;
     } else {
       temp = arr[x][y - 1];
       arr[x][y - 1] = arr[x][y];
@@ -56,7 +56,7 @@ const asteroidRight = (arr) => {
   }
   while (numberOfAsteroids < 5) {
     let i = 2 + Math.floor(Math.random() * 14);
-    arr[i][arr[0].length - 1] = 'X'; // átirtam
+    arr[i][arr[0].length - 1] = 'X';
     numberOfAsteroids++;
   }
 };

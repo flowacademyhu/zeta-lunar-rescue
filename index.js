@@ -5,6 +5,10 @@ stdin.setEncoding('utf-8'); // kódolás beállítása
 stdin.on('data', (key1) => {
   if (key1 === 'q') {
     process.exit(); // ezzel a paranccsal lép ki a programból. Fontosn, mert különben nincs kilépés!
+  } else if (key1 === 'a') {
+    // spaceship.spaceshipLeft();
+  } else if (key1 === 'd') {
+    // spaceship.spaceshipRight();
   }
 });
 let createBoard = require('./array.js');
@@ -16,9 +20,9 @@ let iteration = 0;
 board[5][2] = 7;
 board[7][5] = 7;
 board[10][16] = 7;
-board[6][2] = 'X';
-board[8][5] = 'X';
-board[11][16] = 'X';
+board[6][2] = 0;
+board[8][5] = 0;
+board[11][16] = 0;
 
 const main = () => {
   setInterval(function () {
