@@ -1,35 +1,42 @@
 const mothership = require('./mothership');
-let stdin = process.stdin; // lekérjük a bemeneti folyamatot
-stdin.setRawMode(true); // végtelen ciklus
+let stdin = process.stdin;
+stdin.setRawMode(true);
 stdin.resume();
-stdin.setEncoding('utf-8'); // kódolás beállítása
+stdin.setEncoding('utf-8');
 stdin.on('data', (key1) => {
   if (key1 === 'q') {
-    process.exit(); // ezzel a paranccsal lép ki a programból. Fontosn, mert különben nincs kilépés!
+    process.exit();
   }
 });
-let tombmuv = require('./tomb.js');
-let asteroids = require('./asteroids.js');
+let createBoard = require('./array.js');
+let asteroid = require('./asteroids.js');
 
-let tomb = tombmuv.generate2d(20, 20);
-let array = tombmuv.fill2DArray(tomb);
-let szamlalo = 0;
-let randomSzamok = [3, 6, 9];
-mothership.init(array);
+
+let board = createBoard.fill2DArray(createBoard.generate2d(20, 20));
+let iteration = 0;
+
+board[5][2] = 7;
+board[7][5] = 7;
+board[10][16] = 7;
+board[6][2] = 'X';
+board[8][5] = 'X';
+board[11][16] = 'X';
+
+mothership.init(board);
+
 
 const main = () => {
-  var interval = setInterval(function () {
+  setInterval(function () {
     console.clear();
-    szamlalo++;
-    mothership.move(array);
-    asteroids.asteroidLeft1(array, randomSzamok[0]);
-    asteroids.asteroidLeft1(array, randomSzamok[1]);
-    asteroids.asteroidLeft1(array, randomSzamok[2]);
-    tombmuv.matrixKiiratas(array);
-    console.log('Szamlalo:', szamlalo);
-    if (szamlalo % 21 === 0) {
-      randomSzamok = tombmuv.randomSorGenerator();
+
+    iteration++;
+    asteroid.asteroidLeft(board);
+    mothership.move(board);
+    if (iteration % 2 === 0) {
+      asteroid.asteroidRight(board);
     }
+    createBoard.printMatrix(board);
+    console.log('iteration:', iteration);
   }, 200);
 };
 
