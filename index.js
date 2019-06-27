@@ -31,6 +31,7 @@ const main = () => {
     // asteroids.asteroidLeft1(array, randomSzamok[1]);
     // asteroids.asteroidLeft1(array, randomSzamok[2]);
     asteroids2.asteroidLeft1(array);
+    asteroids2.asteroidRight(array);
     tombmuv.matrixKiiratas(array);
     console.log('Szamlalo:', szamlalo);
     if (szamlalo % 21 === 0) {

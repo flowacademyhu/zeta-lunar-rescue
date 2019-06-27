@@ -45,13 +45,13 @@ const asteroidRight = (arr) => {
     if (y === 0) { // átirtam
       arr[x][y] = 0;
     } else {
-      arr[x][y + 1] = arr[x][y];
+      arr[x][y - 1] = arr[x][y];
       arr[x][y] = 0;
     }
   }
   while (numberOfAsteroids < 5) {
     let i = 2 + Math.floor(Math.random() * 14);
-    arr[i][0] = 'X'; // átirtam
+    arr[i][arr[0].length - 1] = 'X'; // átirtam
     numberOfAsteroids++;
   }
 };
