@@ -1,74 +1,5 @@
-let stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf-8');
-stdin.on('data', (key1) => {
-  if (key1 === 'q') {
-    process.exit();
-  } else if (key1 === 'a') {
-    spaceShipLeft(board);
-  } else if (key1 === 'd') {
-    spaceShipRight(board);
-  }
-});
 
-const generate2d = (n, m) => {
-  let arr = new Array(n);
-  for (let i = 0; i < n; i++) {
-    arr[i] = new Array(m);
-  }
-  return arr;
-};
-
-let tomb = generate2d(20, 20);
-
-const fill2Dboard = (tomb) => {
-  for (let i = 0; i < tomb.length; i++) {
-    for (let j = 0; j < tomb[i].length; j++) {
-      tomb[i][j] = 0;
-    }
-  }
-  return tomb;
-};
-
-let board = fill2Dboard(tomb);
-let randomSzamok = [3, 6, 9];
-
-const randomSorGenerator = () => {
-  let m; let n; let k;
-  m = 2 + Math.floor(Math.random() * 14);
-  do {
-    n = 2 + Math.floor(Math.random() * 14);
-  } while (m === n);
-
-  do {
-    k = 2 + Math.floor(Math.random() * 14);
-  } while (m === k || k === n);
-
-  let arr = [];
-  arr.push(m);
-  arr.push(n);
-  arr.push(k);
-  return arr;
-};
-
-const matrixKiiratas = (arr) => {
-  console.clear();
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      process.stdout.write(arr[i][j] + ' ');
-    }
-    console.log();
-  }
-  console.log();
-  console.log('Életeid: 85');
-};
-
-board[0][6] = 'M';
-board[0][7] = 'M';
-board[0][8] = 'M';
-board[0][9] = 'M';
-board[0][10] = 'M';
+/* let board = fill2Dboard(tomb); */
 
 const MCounter = (arr) => {
   let count = 0;
@@ -82,9 +13,9 @@ const MCounter = (arr) => {
   return count;
 };
 
-let MCount = MCounter(board);
+// let MCount = MCounter(board);
 
-const motherShipSearchI = (arr) => {
+const motherShipSearchI = (arr, MCount) => {
   let startI = 0;
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -96,9 +27,9 @@ const motherShipSearchI = (arr) => {
   return startI;
 };
 
-let startI = motherShipSearchI(board);
+// let startI = motherShipSearchI(board);
 
-const motherShipSearchJ = (arr) => {
+const motherShipSearchJ = (arr, MCount) => {
   let startJ = 0;
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -110,11 +41,11 @@ const motherShipSearchJ = (arr) => {
   return startJ;
 };
 
-let startJ = motherShipSearchJ(board);
+// let startJ = motherShipSearchJ(board);
 
-board[startI][startJ] = 'S';
+// board[startI][startJ] = 'S';
 
-const spaceShipLeft = (arr) => {
+const spaceShipLeft = (arr, startI) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -137,7 +68,7 @@ const spaceShipLeft = (arr) => {
   }
 };
 
-const spaceShipRight = (arr) => {
+const spaceShipRight = (arr, startI) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -160,7 +91,7 @@ const spaceShipRight = (arr) => {
   }
 };
 
-const spaceShipLand = (arr) => {
+const spaceShipLand = (arr, startI) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -182,9 +113,9 @@ const spaceShipLand = (arr) => {
   }
 };
 
-let szamlalo = 0;
+// let szamlalo = 0;
 
-const main = () => {
+/* const main = () => {
   var interval = setInterval(function () {
     console.clear();
     szamlalo++;
@@ -194,4 +125,13 @@ const main = () => {
   }, 600);
 };
 
-main();
+main(); */
+
+module.exports = {
+  MCounter,
+  spaceShipLand,
+  spaceShipLeft,
+  spaceShipRight,
+  motherShipSearchI,
+  motherShipSearchJ
+};
