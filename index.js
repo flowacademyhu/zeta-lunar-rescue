@@ -1,3 +1,4 @@
+const mothership = require('./mothership');
 let stdin = process.stdin; // lekérjük a bemeneti folyamatot
 stdin.setRawMode(true); // végtelen ciklus
 stdin.resume();
@@ -14,11 +15,13 @@ let tomb = tombmuv.generate2d(20, 20);
 let array = tombmuv.fill2DArray(tomb);
 let szamlalo = 0;
 let randomSzamok = [3, 6, 9];
+mothership.init(array);
 
 const main = () => {
   var interval = setInterval(function () {
     console.clear();
     szamlalo++;
+    mothership.move(array);
     asteroids.asteroidLeft1(array, randomSzamok[0]);
     asteroids.asteroidLeft1(array, randomSzamok[1]);
     asteroids.asteroidLeft1(array, randomSzamok[2]);
