@@ -1,53 +1,6 @@
-
-/* let board = fill2Dboard(tomb); */
-
-const MCounter = (arr) => {
-  let count = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 'M') {
-        count++;
-      }
-    }
-  }
-  return count;
-};
-
-// let MCount = MCounter(board);
-
-const motherShipSearchI = (arr, MCount) => {
-  let startI = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] && arr[i][j + MCount - 1] === 'M') {
-        startI = i;
-      }
-    }
-  }
-  return startI;
-};
-
-// let startI = motherShipSearchI(board);
-
-const motherShipSearchJ = (arr, MCount) => {
-  let startJ = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] && arr[i][j + MCount - 1] === 'M') {
-        startJ = j + (Math.floor(MCount / 2));
-      }
-    }
-  }
-  return startJ;
-};
-
-// let startJ = motherShipSearchJ(board);
-
-// board[startI][startJ] = 'S';
-
 const spaceShipLeft = (arr, startI) => {
-  let indI = -1;
-  let indJ = -1;
+  let indI = 0;
+  let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 'S') {
@@ -69,8 +22,8 @@ const spaceShipLeft = (arr, startI) => {
 };
 
 const spaceShipRight = (arr, startI) => {
-  let indI = -1;
-  let indJ = -1;
+  let indI = 0;
+  let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 'S') {
@@ -92,8 +45,8 @@ const spaceShipRight = (arr, startI) => {
 };
 
 const spaceShipLand = (arr, startI) => {
-  let indI = -1;
-  let indJ = -1;
+  let indI = 0;
+  let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 'S') {
@@ -116,16 +69,16 @@ const spaceShipLand = (arr, startI) => {
 // let szamlalo = 0;
 
 /* const main = () => {
-  var interval = setInterval(function () {
-    console.clear();
-    szamlalo++;
-    spaceShipLand(board);
-    matrixKiiratas(board);
-    console.log('Szamlalo:', szamlalo);
-  }, 600);
-};
+    var interval = setInterval(function () {
+      console.clear();
+      szamlalo++;
+      spaceShipLand(board);
+      matrixKiiratas(board);
+      console.log('Szamlalo:', szamlalo);
+    }, 600);
+  };
 
-main(); */
+  main(); */
 
 module.exports = {
   MCounter,
