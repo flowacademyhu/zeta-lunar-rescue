@@ -21,14 +21,14 @@ const mshipRight = (mothershipRow) => {
   }
 };
 
-const move = (board) => {
+const move = (board, boards) => {
   const mothershipRow = board[0];
   if (mothershipDirection === 'right') {
     mshipRight(mothershipRow);
   } else {
     mshipLeft(mothershipRow);
   }
-  if (mothershipRow[19] === 'M') {
+  if (mothershipRow[boards - 1] === 'M') {
     mothershipDirection = 'left';
   }
   if (mothershipRow[0] === 'M') {
