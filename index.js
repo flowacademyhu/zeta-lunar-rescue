@@ -3,7 +3,9 @@ let createBoard = require('./array.js');
 let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
 
-let board = createBoard.fill2DArray(createBoard.generate2d(20, 20));
+const BOARD_SIZE = 50;
+const MAX_ASTEROID = 8;
+let board = createBoard.fill2DArray(createBoard.generate2d(BOARD_SIZE));
 let iteration = 0;
 
 mothership.init(board);
@@ -26,12 +28,12 @@ stdin.on('data', (key1) => {
   }
 });
 
-board[5][2] = 7;
-board[7][5] = 7;
+board[15][12] = 7;
+board[17][15] = 7;
 board[10][16] = 7;
 board[6][2] = 'X';
-board[8][5] = 'X';
-board[11][16] = 'X';
+board[18][15] = 'X';
+board[21][25] = 'X';
 
 const main = () => {
   setInterval(function () {
@@ -39,10 +41,10 @@ const main = () => {
 
     iteration++;
     spaceship.spaceShipLand(board, startI);
-    asteroid.asteroidLeft(board);
-    mothership.move(board);
+    asteroid.asteroidLeft(board, BOARD_SIZE, MAX_ASTEROID);
+    mothership.move(board, BOARD_SIZE);
     if (iteration % 2 === 0) {
-      asteroid.asteroidRight(board);
+      asteroid.asteroidRight(board, BOARD_SIZE, MAX_ASTEROID);
     }
     createBoard.printMatrix(board);
     console.log('iteration:', iteration);
