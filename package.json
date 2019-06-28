@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/flowacademyhu/zeta-lunar-rescue#readme",
   "dependencies": {
-    "axel": "0.0.3"
+    "axel": "0.0.3",
+    "readline-sync": "^1.4.9"
   }
 }

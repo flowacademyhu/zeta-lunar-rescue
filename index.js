@@ -1,12 +1,15 @@
 const mothership = require('./mothership');
+const scoreboard = require('./scoreboard.js');
 let createBoard = require('./array.js');
 let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
+let readline = require('readline-sync');
 
 const BOARD_SIZE = 50;
 const MAX_ASTEROID = 8;
 let board = createBoard.fill2DArray(createBoard.generate2d(BOARD_SIZE));
 let iteration = 0;
+let player = readline.question('What is your name?');
 
 mothership.init(board);
 
@@ -20,7 +23,7 @@ stdin.resume();
 stdin.setEncoding('utf-8');
 stdin.on('data', (key1) => {
   if (key1 === 'q') {
-    process.exit();
+    scoreboard.save(player, iteration);
   } else if (key1 === 'a') {
     spaceship.spaceShipLeft(board, startI);
   } else if (key1 === 'd') {
