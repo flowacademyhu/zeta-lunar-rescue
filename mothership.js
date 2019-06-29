@@ -1,5 +1,5 @@
 let mothershipDirection = 'right';
-const mothershipHeight = 0;
+let mothershipHeight = 0;
 
 const mshipLeft = (mothershipRow) => {
   if (mothershipDirection === 'left') {
@@ -29,7 +29,7 @@ const move = (board, boards) => {
   } else {
     mshipLeft(mothershipRow);
   }
-  if (mothershipRow[19] === 'M') {
+  if (mothershipRow[boards - 1] === 'M') {
     mothershipDirection = 'left';
   }
   if (mothershipRow[mothershipHeight] === 'M') {

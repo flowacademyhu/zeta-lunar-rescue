@@ -1,4 +1,4 @@
-const asteroidLeft = (arr) => {
+const asteroidLeft = (arr, boards, maxAsteroid) => {
   let temp;
   let numberOfAsteroids = 0;
   let tempArray = [];
@@ -23,14 +23,14 @@ const asteroidLeft = (arr) => {
       arr[x][y] = temp;
     }
   }
-  while (numberOfAsteroids < 5) {
-    let i = 2 + Math.floor(Math.random() * 14);
+  while (numberOfAsteroids < maxAsteroid) {
+    let i = 2 + Math.floor(Math.random() * (boards - 6));
     arr[i][0] = 7;
     numberOfAsteroids++;
   }
 };
 
-const asteroidRight = (arr) => {
+const asteroidRight = (arr, boards, maxAsteroid) => {
   let numberOfAsteroids = 0;
   let tempArray = [];
   for (let i = 0; i < arr.length; i++) {
@@ -54,8 +54,8 @@ const asteroidRight = (arr) => {
       arr[x][y] = temp;
     }
   }
-  while (numberOfAsteroids < 5) {
-    let i = 2 + Math.floor(Math.random() * 14);
+  while (numberOfAsteroids < maxAsteroid) {
+    let i = 2 + Math.floor(Math.random() * (boards - 6));
     arr[i][arr[0].length - 1] = 'X';
     numberOfAsteroids++;
   }

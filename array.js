@@ -1,7 +1,7 @@
-const generate2d = (n, m) => {
+const generate2d = (n) => {
   let arr = new Array(n);
   for (let i = 0; i < n; i++) {
-    arr[i] = new Array(m);
+    arr[i] = new Array(n);
   }
   return arr;
 };
@@ -37,7 +37,11 @@ const printMatrix = (arr) => {
   console.clear();
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      process.stdout.write(arr[i][j] + ' ');
+      if (arr[i][j] === 0) {
+        process.stdout.write(' ' + ' ');
+      } else {
+        process.stdout.write(arr[i][j] + ' ');
+      }
     }
     console.log();
   }

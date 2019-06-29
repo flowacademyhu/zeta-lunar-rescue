@@ -46,7 +46,7 @@ const main = () => {
     asteroid.asteroidLeft(board, BOARD_SIZE, MAX_ASTEROID);
     mothership.move(board, BOARD_SIZE);
     if (iteration % 2 === 0) {
-      asteroid.asteroidRight(board);
+      asteroid.asteroidRight(board, BOARD_SIZE, MAX_ASTEROID);
     }
     createBoard.printMatrix(board);
     console.log('iteration:', iteration);
