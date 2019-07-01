@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const mothership = require('./mothership');
 const scoreboard = require('./scoreboard.js');
 let createBoard = require('./board');
