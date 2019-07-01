@@ -4,13 +4,17 @@ let createBoard = require('./board');
 let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
 let readline = require('readline-sync');
+let enemySpaceships = require('./enemy-spaceships');
 
 const BOARD_SIZE = 40;
 const MAX_ASTEROID = 8;
+const MAX_ENEMY_SPACESHIPS = 6;
+
 let board = createBoard.fillBoard(createBoard.generateBoard(BOARD_SIZE));
 let iteration = 0;
 let gameStart = false;
 let player = readline.question('What is your name?');
+let gameMode = 'Landing';
 
 mothership.init(board);
 
@@ -39,6 +43,7 @@ board[10][16] = 7;
 board[6][2] = 'X';
 board[18][15] = 'X';
 board[21][25] = 'X';
+// board[37][0] = '4';
 
 const main = () => {
   setInterval(function () {
@@ -46,14 +51,23 @@ const main = () => {
 
     iteration++;
     spaceship.spaceShipLand(board, mothership.mothershipHeight);
-    asteroid.asteroidLeft(board, BOARD_SIZE, MAX_ASTEROID);
     mothership.move(board, BOARD_SIZE);
-    if (iteration % 2 === 0) {
-      asteroid.asteroidRight(board, BOARD_SIZE, MAX_ASTEROID);
+    if (gameMode === 'Landing') {
+      asteroid.asteroidLeft(board, BOARD_SIZE, MAX_ASTEROID);
+      if (iteration % 2 === 0) {
+        asteroid.asteroidRight(board, BOARD_SIZE, MAX_ASTEROID);
+      }
+    } else {
+      enemySpaceships.clearAsteroids(board);
+      enemySpaceships.enemySpaceships(board, MAX_ENEMY_SPACESHIPS, BOARD_SIZE);
     }
+
+    gameMode = enemySpaceships.changeGamemode(board);
+
     createBoard.printMatrix(board);
     console.log('iteration:', iteration);
-  }, 500);
+    console.log('Gamemode:', gameMode);
+  }, 300);
 };
 
 main();
