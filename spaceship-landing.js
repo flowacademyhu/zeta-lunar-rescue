@@ -81,8 +81,8 @@ const spaceShipRight = (arr, startI) => {
 };
 
 const spaceShipLand = (arr, startI) => {
-  let indI = 0;
-  let indJ = 0;
+  let indI = -1;
+  let indJ = -1;
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 'S') {

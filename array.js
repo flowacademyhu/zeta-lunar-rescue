@@ -1,3 +1,5 @@
+let term = require('terminal-kit').terminal;
+
 const generate2d = (n) => {
   let arr = new Array(n);
   for (let i = 0; i < n; i++) {
@@ -38,7 +40,13 @@ const printMatrix = (arr) => {
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 0) {
-        process.stdout.write(' ' + ' ');
+        term.bgBlack(' ' + ' ');
+      } else if (arr[i][j] === 'S') {
+        term.bgYellow(' ' + ' ');
+      } else if (arr[i][j] === 'M') {
+        term.bgYellow(' ' + ' ');
+      } else if (arr[i][j] === 7 || arr[i][j] === 'X') {
+        term.bgRed(' ' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');
       }
@@ -46,7 +54,8 @@ const printMatrix = (arr) => {
     console.log();
   }
   console.log();
-  console.log('Életeid: 85');
+  term.yellow('Life: 85');
+  console.log();
 };
 
 module.exports = {
