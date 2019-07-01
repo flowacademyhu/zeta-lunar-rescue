@@ -1,3 +1,4 @@
+const constanses = require('./constanses');
 let term = require('terminal-kit').terminal;
 
 const generateBoard = (n) => {
@@ -11,7 +12,7 @@ const generateBoard = (n) => {
 const fillBoard = (tomb) => {
   for (let i = 0; i < tomb.length; i++) {
     for (let j = 0; j < tomb[i].length; j++) {
-      tomb[i][j] = 0;
+      tomb[i][j] = constanses.BACKGROUND;
     }
   }
   return tomb;
@@ -21,13 +22,13 @@ const printMatrix = (arr) => {
   console.clear();
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 0) {
+      if (arr[i][j] === constanses.BACKGROUND) {
         term.bgBlack(' ' + ' ');
-      } else if (arr[i][j] === 'S') {
+      } else if (arr[i][j] === constanses.SPACESHIP) {
         term.bgYellow(' ' + ' ');
-      } else if (arr[i][j] === 'M') {
+      } else if (arr[i][j] === constanses.MOTHERSHIP) {
         term.bgYellow(' ' + ' ');
-      } else if (arr[i][j] === 7 || arr[i][j] === 'X') {
+      } else if (arr[i][j] === constanses.ASTEROID_LEFT || arr[i][j] === constanses.ASTEROID_RIGHT) {
         term.bgRed(' ' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');

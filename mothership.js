@@ -1,3 +1,5 @@
+const constanses = require('./constanses');
+
 let mothershipDirection = 'right';
 let mothershipHeight = 0;
 
@@ -11,7 +13,7 @@ const mshipLeft = (mothershipRow) => {
 const fillMothership = (board) => {
   const mothershipRow = board[mothershipHeight];
   for (let i = 0; i < 5; i++) {
-    mothershipRow[i] = 'M';
+    mothershipRow[i] = constanses.MOTHERSHIP;
   }
 };
 
@@ -29,10 +31,10 @@ const move = (board, boardSize) => {
   } else {
     mshipLeft(mothershipRow);
   }
-  if (mothershipRow[boardSize - 1] === 'M') {
+  if (mothershipRow[boardSize - 1] === constanses.MOTHERSHIP) {
     mothershipDirection = 'left';
   }
-  if (mothershipRow[0] === 'M') {
+  if (mothershipRow[0] === constanses.MOTHERSHIP) {
     mothershipDirection = 'right';
   }
 };
