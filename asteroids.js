@@ -1,27 +1,67 @@
-const asteroidLeft1 = (arr, m) => {
-  let temp1 = 0;
-  let temp2 = 0;
-  let x = -1;
-  for (let i = 0; i < arr[m].length; i++) {
-    if (arr[m][i] === 7) {
-      x = i;
+const asteroidLeft = (board, boardSize, maxAsteroid) => {
+  let temp;
+  let numberOfAsteroids = 0;
+  let tempArray = [];
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (board[i][j] === 7) {
+        tempArray.push(i);
+        tempArray.push(j);
+        numberOfAsteroids++;
+      }
     }
   }
+  while (tempArray.length !== 0) {
+    let j = tempArray.pop();
+    let i = tempArray.pop();
+    if (j === board[0].length - 1) {
+      board[i][j] = 0;
+    } else if (board[i][j + 1] === 'X') {
+    } else {
+      temp = board[i][j + 1];
+      board[i][j + 1] = board[i][j];
+      board[i][j] = temp;
+    }
+  }
+  while (numberOfAsteroids < maxAsteroid) {
+    let i = 2 + Math.floor(Math.random() * (boardSize - 6));
+    board[i][0] = 7;
+    numberOfAsteroids++;
+  }
+};
 
-  if (x === -1) {
-    arr[m][0] = 7;
-  } else if (x === 0) {
-    arr[m][x] = 0;
-    arr[m][x + 1] = 7;
-  } else if (x === arr[m].length - 1) {
-    arr[m][x] = 0;
-  } else if (x > 0) {
-    // temp = arr[x];
-    arr[m][x] = 0;
-    arr[m][x + 1] = 7;
+const asteroidRight = (board, boardSize, maxAsteroid) => {
+  let numberOfAsteroids = 0;
+  let tempArray = [];
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (board[i][j] === 'X') {
+        tempArray.push(i);
+        tempArray.push(j);
+        numberOfAsteroids++;
+      }
+    }
+  }
+  while (tempArray.length !== 0) {
+    let temp;
+    let j = tempArray.pop();
+    let i = tempArray.pop();
+    if (j === 0) {
+      board[i][j] = 0;
+    } else {
+      temp = board[i][j - 1];
+      board[i][j - 1] = board[i][j];
+      board[i][j] = temp;
+    }
+  }
+  while (numberOfAsteroids < maxAsteroid) {
+    let i = 2 + Math.floor(Math.random() * (boardSize - 6));
+    board[i][board[0].length - 1] = 'X';
+    numberOfAsteroids++;
   }
 };
 
 module.exports = {
-  asteroidLeft1
+  asteroidLeft,
+  asteroidRight
 };

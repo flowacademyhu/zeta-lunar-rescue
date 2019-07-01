@@ -1,4 +1,5 @@
 let mothershipDirection = 'right';
+let mothershipHeight = 0;
 
 const mothershipLeft = (mothershipRow) => {
   if (mothershipDirection === 'left') {
@@ -8,7 +9,7 @@ const mothershipLeft = (mothershipRow) => {
 };
 
 const fillMothership = (board) => {
-  const mothershipRow = board[0];
+  const mothershipRow = board[mothershipHeight];
   for (let i = 0; i < 5; i++) {
     mothershipRow[i] = 'M';
   }
@@ -21,14 +22,14 @@ const mothershipRight = (mothershipRow) => {
   }
 };
 
-const move = (board) => {
-  const mothershipRow = board[0];
+const move = (board, boardSize) => {
+  const mothershipRow = board[mothershipHeight];
   if (mothershipDirection === 'right') {
     mothershipRight(mothershipRow);
   } else {
     mothershipLeft(mothershipRow);
   }
-  if (mothershipRow[19] === 'M') {
+  if (mothershipRow[boardSize - 1] === 'M') {
     mothershipDirection = 'left';
   }
   if (mothershipRow[0] === 'M') {
@@ -38,5 +39,6 @@ const move = (board) => {
 
 module.exports = {
   move: move,
-  init: fillMothership
+  init: fillMothership,
+  mothershipHeight
 };
