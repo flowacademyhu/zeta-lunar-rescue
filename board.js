@@ -29,6 +29,8 @@ const printMatrix = (arr) => {
         term.bgYellow(' ' + ' ');
       } else if (arr[i][j] === 7 || arr[i][j] === 'X') {
         term.bgRed(' ' + ' ');
+      } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
+        term.bgBlue(' ' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');
       }
