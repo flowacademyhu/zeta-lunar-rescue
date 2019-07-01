@@ -12,6 +12,9 @@
   },
   "author": "",
   "license": "ISC",
+  "bin": {
+    "lunar": "./index.js"
+  },
   "bugs": {
     "url": "https://github.com/flowacademyhu/zeta-lunar-rescue/issues"
   },
