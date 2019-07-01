@@ -15,6 +15,20 @@ let gameStart = false;
 let player = readline.question('What is your name?');
 let gameMode = 'Landing';
 
+board[38][10] = 'T';
+board[38][11] = 'T';
+board[38][12] = 'T';
+board[38][13] = 'T';
+board[39][11] = 'T';
+board[39][12] = 'T';
+
+board[38][1] = 'T';
+board[38][2] = 'T';
+board[38][3] = 'T';
+board[38][4] = 'T';
+board[39][2] = 'T';
+board[39][3] = 'T';
+
 mothership.init(board);
 
 let stdin = process.stdin;

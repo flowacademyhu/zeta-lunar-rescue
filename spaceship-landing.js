@@ -48,12 +48,15 @@ const spaceShipLeft = (arr, startI) => {
     }
   }
   if (indI > startI) {
-    if (indI === arr.length - 3) {
+    if (indI + 1 === constanses.LANDING_TARGET) {
       arr[indI][indJ] = constanses.SPACESHIP;
-    } else if (indJ === constanses.BACKGROUND) {
+    } else if (indJ === 0) {
       arr[indI][indJ] = constanses.SPACESHIP;
-    } else {
+    } else if (arr[indI][indJ - 1] !== constanses.ASTEROID_LEFT && arr[indI][indJ - 1] !== constanses.ASTEROID_RIGHT) {
       arr[indI][indJ - 1] = constanses.SPACESHIP;
+      arr[indI][indJ] = constanses.BACKGROUND;
+    } else if (arr[indI][indJ - 1] === constanses.ASTEROID_LEFT || arr[indI][indJ - 1] === constanses.ASTEROID_RIGHT) {
+      arr[indI][indJ - 1] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
     }
   }
@@ -71,12 +74,15 @@ const spaceShipRight = (arr, startI) => {
     }
   }
   if (indI > startI) {
-    if (indI === arr.length - 3) {
+    if (indI + 1 === constanses.LANDING_TARGET) {
       arr[indI][indJ] = constanses.SPACESHIP;
     } else if (indJ === arr[2].length - 1) {
       arr[indI][indJ] = constanses.SPACESHIP;
-    } else {
+    } else if (arr[indI][indJ + 1] !== constanses.ASTEROID_LEFT && arr[indI][indJ + 1] !== constanses.ASTEROID_RIGHT) {
       arr[indI][indJ + 1] = constanses.SPACESHIP;
+      arr[indI][indJ] = constanses.BACKGROUND;
+    } else if (arr[indI][indJ + 1] === constanses.ASTEROID_LEFT || arr[indI][indJ + 1] === constanses.ASTEROID_RIGHT) {
+      arr[indI][indJ + 1] = 'B';
       arr[indI][indJ] = constanses.BACKGROUND;
     }
   }
@@ -93,14 +99,19 @@ const spaceShipLand = (arr, startI) => {
       }
     }
   }
-  if (indI === arr.length - 3) {
+  if (indI + 1 === constanses.LANDING_TARGET) {
     arr[indI][indJ] = constanses.SPACESHIP;
-  } else if (indI > startI) {
+  } else if (indI > startI && indI < arr.length - 2 && arr[indI + 1][indJ] !== constanses.ASTEROID_LEFT && arr[indI + 1][indJ] !== constanses.ASTEROID_RIGHT && arr[indI + 1][indJ] !== constanses.LANDING_TARGET) {
     arr[indI + 1][indJ] = constanses.SPACESHIP;
-    arr[indI][indJ] = 0;
+    arr[indI][indJ] = constanses.BACKGROUND;
+  } else if (indI > startI && (arr[indI + 1][indJ] === constanses.ASTEROID_LEFT || arr[indI + 1][indJ] === constanses.ASTEROID_RIGHT || indI === arr.length - 2)) {
+    arr[indI + 1][indJ] = constanses.EXPLOSION;
+    arr[indI][indJ] = constanses.BACKGROUND;
   } else if (indI === startI) {
     arr[indI + 1][indJ] = constanses.SPACESHIP;
     arr[indI][indJ] = constanses.MOTHERSHIP;
+  } else if (indI + 1 === arr.length - 1) {
+    arr[indI][indJ] = constanses.EXPLOSION;
   }
 };
 
