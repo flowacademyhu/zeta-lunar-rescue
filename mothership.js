@@ -1,6 +1,6 @@
 let mothershipDirection = 'right';
 
-const mshipLeft = (mothershipRow) => {
+const mothershipLeft = (mothershipRow) => {
   if (mothershipDirection === 'left') {
     mothershipRow.shift();
     mothershipRow.push(0);
@@ -9,12 +9,12 @@ const mshipLeft = (mothershipRow) => {
 
 const fillMothership = (board) => {
   const mothershipRow = board[0];
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i < 5; i++) {
     mothershipRow[i] = 'M';
   }
 };
 
-const mshipRight = (mothershipRow) => {
+const mothershipRight = (mothershipRow) => {
   if (mothershipDirection === 'right') {
     mothershipRow.unshift(0);
     mothershipRow.pop();
@@ -24,9 +24,9 @@ const mshipRight = (mothershipRow) => {
 const move = (board) => {
   const mothershipRow = board[0];
   if (mothershipDirection === 'right') {
-    mshipRight(mothershipRow);
+    mothershipRight(mothershipRow);
   } else {
-    mshipLeft(mothershipRow);
+    mothershipLeft(mothershipRow);
   }
   if (mothershipRow[19] === 'M') {
     mothershipDirection = 'left';
