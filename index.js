@@ -8,6 +8,7 @@ let asteroid = require('./asteroids');
 let spaceship = require('./spaceship-landing');
 let readline = require('readline-sync');
 let enemySpaceships = require('./enemy-spaceships');
+let projectiles = require('./projectiles');
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let iteration = 0;
@@ -58,6 +59,7 @@ const main = () => {
     } else {
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
+      projectiles.enemyProjectiles(board);
     }
 
     gameMode = enemySpaceships.changeGamemode(board);
