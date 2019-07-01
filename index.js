@@ -3,7 +3,7 @@ let createBoard = require('./array.js');
 let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
 
-const BOARD_SIZE = 50;
+const BOARD_SIZE = 45;
 const MAX_ASTEROID = 8;
 let board = createBoard.fill2DArray(createBoard.generate2d(BOARD_SIZE));
 let iteration = 0;
@@ -48,7 +48,7 @@ const main = () => {
     }
     createBoard.printMatrix(board);
     console.log('iteration:', iteration);
-  }, 200);
+  }, 500);
 };
 
 main();
