@@ -77,16 +77,17 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
   }
 };
 
+let spaceshipCount = 0;
+
 const changeGamemode = (board) => {
   const LANDING_ROW = board.length - 3;
   let gameMode;
-  let spaceshipCount = 0;
   for (let i = 0; i < board[LANDING_ROW].length; i++) {
     if (board[LANDING_ROW][i] === 'S') {
       spaceshipCount++;
     }
   }
-  if (spaceshipCount > 0) {
+  if (spaceshipCount > 1) {
     gameMode = 'Fly';
   } else {
     gameMode = 'Landing';

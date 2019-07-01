@@ -14,6 +14,7 @@ let iteration = 0;
 let gameStart = false;
 let player = readline.question('What is your name?');
 let gameMode = 'Landing';
+let life = 4;
 
 board[38][10] = 'T';
 board[38][11] = 'T';
@@ -60,7 +61,7 @@ board[21][25] = constanses.ASTEROID_RIGHT;
 const main = () => {
   setInterval(function () {
     console.clear();
-
+    spaceship.explosions(board);
     iteration++;
     spaceship.spaceShipLand(board, mothership.mothershipHeight);
     mothership.move(board, constanses.BOARD_SIZE);
