@@ -9,6 +9,7 @@ const SPACESHIP = 'S';
 const MOTHERSHIP = 'M';
 const ASTEROID_LEFT = 7;
 const ASTEROID_RIGHT = 'X';
+const MAX_ENEMY_SPACESHIPS = 6;
 
 module.exports = {
   BOARD_SIZE,
@@ -21,5 +22,6 @@ module.exports = {
   SPACESHIP,
   MOTHERSHIP,
   ASTEROID_LEFT,
-  ASTEROID_RIGHT
+  ASTEROID_RIGHT,
+  MAX_ENEMY_SPACESHIPS
 };

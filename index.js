@@ -49,11 +49,6 @@ const main = () => {
 
     iteration++;
     spaceship.spaceShipLand(board, mothership.mothershipHeight);
-    asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
-    mothership.move(board, constanses.BOARD_SIZE);
-    if (iteration % 2 === 0) {
-      asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
-    }
     mothership.move(board, constanses.BOARD_SIZE);
     if (gameMode === 'Landing') {
       asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
