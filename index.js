@@ -5,12 +5,12 @@ let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
 let readline = require('readline-sync');
 
+
 const BOARD_SIZE = 40;
 const MAX_ASTEROID = 8;
 let board = createBoard.fill2DArray(createBoard.generate2d(BOARD_SIZE));
 let iteration = 0;
 let gameStart = false;
-
 let player = readline.question('What is your name?');
 
 mothership.init(board);
