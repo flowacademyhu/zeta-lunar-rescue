@@ -1,9 +1,9 @@
-const mothership = require('./mothership');
-const scoreboard = require('./scoreboard');
-const constanses = require('./constanses');
-let createBoard = require('./board');
-let asteroid = require('./asteroids');
-let spaceship = require('./spaceship-landing');
+const mothership = require('./lib/mothership');
+const scoreboard = require('./lib/scoreboard');
+const constanses = require('./lib/constanses');
+let createBoard = require('./lib/board');
+let asteroid = require('./lib/asteroids');
+let spaceship = require('./lib/spaceship-landing');
 let readline = require('readline-sync');
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
