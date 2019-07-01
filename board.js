@@ -1,6 +1,6 @@
 let term = require('terminal-kit').terminal;
 
-const generate2d = (n) => {
+const generateBoard = (n) => {
   let arr = new Array(n);
   for (let i = 0; i < n; i++) {
     arr[i] = new Array(n);
@@ -8,31 +8,13 @@ const generate2d = (n) => {
   return arr;
 };
 
-const fill2DArray = (tomb) => {
+const fillBoard = (tomb) => {
   for (let i = 0; i < tomb.length; i++) {
     for (let j = 0; j < tomb[i].length; j++) {
       tomb[i][j] = 0;
     }
   }
   return tomb;
-};
-
-const randomSorGenerator = () => {
-  let m; let n; let k;
-  m = 2 + Math.floor(Math.random() * 14);
-  do {
-    n = 2 + Math.floor(Math.random() * 14);
-  } while (m === n);
-
-  do {
-    k = 2 + Math.floor(Math.random() * 14);
-  } while (m === k || k === n);
-
-  let arr = [];
-  arr.push(m);
-  arr.push(n);
-  arr.push(k);
-  return arr;
 };
 
 const printMatrix = (arr) => {
@@ -59,8 +41,7 @@ const printMatrix = (arr) => {
 };
 
 module.exports = {
-  randomSorGenerator,
-  generate2d,
-  fill2DArray,
+  generateBoard,
+  fillBoard,
   printMatrix
 };

@@ -10,7 +10,7 @@ const mshipLeft = (mothershipRow) => {
 
 const fillMothership = (board) => {
   const mothershipRow = board[mothershipHeight];
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i < 5; i++) {
     mothershipRow[i] = 'M';
   }
 };
@@ -22,17 +22,17 @@ const mshipRight = (mothershipRow) => {
   }
 };
 
-const move = (board, boards) => {
+const move = (board, boardSize) => {
   const mothershipRow = board[mothershipHeight];
   if (mothershipDirection === 'right') {
     mshipRight(mothershipRow);
   } else {
     mshipLeft(mothershipRow);
   }
-  if (mothershipRow[boards - 1] === 'M') {
+  if (mothershipRow[boardSize - 1] === 'M') {
     mothershipDirection = 'left';
   }
-  if (mothershipRow[mothershipHeight] === 'M') {
+  if (mothershipRow[0] === 'M') {
     mothershipDirection = 'right';
   }
 };
