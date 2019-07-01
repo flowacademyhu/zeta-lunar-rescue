@@ -7,6 +7,7 @@ let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
 let readline = require('readline-sync');
 let enemySpaceships = require('./enemy-spaceships');
+let projectiles = require('./projectiles');
 
 const BOARD_SIZE = 40;
 const MAX_ASTEROID = 8;
@@ -62,6 +63,7 @@ const main = () => {
     } else {
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, MAX_ENEMY_SPACESHIPS, BOARD_SIZE);
+      projectiles.enemyProjectiles(board);
     }
 
     gameMode = enemySpaceships.changeGamemode(board);

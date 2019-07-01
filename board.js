@@ -31,6 +31,8 @@ const printMatrix = (arr) => {
         term.bgRed(' ' + ' ');
       } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
         term.bgBlue(' ' + ' ');
+      } else if (arr[i][j] === 'P') {
+        term.bgBlack('+' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');
       }
