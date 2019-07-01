@@ -14,15 +14,15 @@ const asteroidLeft = (board, boardSize, maxAsteroid) => {
     }
   }
   while (tempArray.length !== 0) {
-    let y = tempArray.pop();
-    let x = tempArray.pop();
-    if (y === board[0].length - 1) {
-      board[x][y] = constanses.BACKGROUND;
-    } else if (board[x][y + 1] === constanses.ASTEROID_RIGHT) {
+    let j = tempArray.pop();
+    let i = tempArray.pop();
+    if (j === board[0].length - 1) {
+      board[i][j] = constanses.BACKGROUND;
+    } else if (board[i][j + 1] === constanses.ASTEROID_RIGHT) {
     } else {
-      temp = board[x][y + 1];
-      board[x][y + 1] = board[x][y];
-      board[x][y] = temp;
+      temp = board[i][j + 1];
+      board[i][j + 1] = board[i][j];
+      board[i][j] = temp;
     }
   }
   while (numberOfAsteroids < maxAsteroid) {
@@ -46,14 +46,14 @@ const asteroidRight = (board, boardSize, maxAsteroid) => {
   }
   while (tempArray.length !== 0) {
     let temp;
-    let y = tempArray.pop();
-    let x = tempArray.pop();
-    if (y === 0) {
-      board[x][y] = constanses.BACKGROUND;
+    let j = tempArray.pop();
+    let i = tempArray.pop();
+    if (j === 0) {
+      board[i][j] = constanses.BACKGROUND;
     } else {
-      temp = board[x][y - 1];
-      board[x][y - 1] = board[x][y];
-      board[x][y] = temp;
+      temp = board[i][j - 1];
+      board[i][j - 1] = board[i][j];
+      board[i][j] = temp;
     }
   }
   while (numberOfAsteroids < maxAsteroid) {

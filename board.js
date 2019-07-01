@@ -30,6 +30,8 @@ const printMatrix = (arr) => {
         term.bgYellow(' ' + ' ');
       } else if (arr[i][j] === constanses.ASTEROID_LEFT || arr[i][j] === constanses.ASTEROID_RIGHT) {
         term.bgRed(' ' + ' ');
+      } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
+        term.bgBlue(' ' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');
       }
