@@ -12,7 +12,7 @@ const mothershipLeft = (mothershipRow) => {
 
 const fillMothership = (board) => {
   const mothershipRow = board[mothershipHeight];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     mothershipRow[i] = constanses.MOTHERSHIP;
   }
 };

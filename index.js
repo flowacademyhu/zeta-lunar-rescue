@@ -69,7 +69,7 @@ const main = () => {
         asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
       }
     } else {
-      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3);
+      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board));
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
       projectiles.enemyProjectiles(board);
