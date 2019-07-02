@@ -20,30 +20,8 @@ let player = readline.question('What is your name?');
 let gameMode = 'Landing';
 let life = 4;
 
-// board[20][0] = 'Q';
-// board[39][0] = 'Q';
-// board[20][39] = 'Q';
-// board[39][39] = 'Q';
-
-board[38][10] = 'T';
-board[38][11] = 'T';
-board[38][12] = 'T';
-board[38][13] = 'T';
-board[39][11] = 'T';
-board[39][12] = 'T';
-
-board[38][1] = 'T';
-board[38][2] = 'T';
-board[38][3] = 'T';
-board[38][4] = 'T';
-board[39][2] = 'T';
-board[39][3] = 'T';
-
 mothership.init(board);
 platform(board);
-let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
-let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
-board[startI][startJ] = 'S';
 
 let stdin = process.stdin;
 stdin.setRawMode(true);
