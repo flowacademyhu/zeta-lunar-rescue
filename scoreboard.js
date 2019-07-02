@@ -1,4 +1,13 @@
 const fs = require('fs');
+const { table } = require('table');
+
+const generateArray = (n, m) => {
+  let arr = new Array(n);
+  for (let i = 0; i < n; i++) {
+    arr[i] = new Array(m);
+  }
+  return arr;
+};
 
 const save = (player, iteration) => {
   fs.appendFile('./scoreboard.txt', `${player} ${iteration} \n`, function (err) {
@@ -38,10 +47,13 @@ const topScores = () => {
           }
         }
       }
+      let top10 = generateArray(10, 2);
       const dislpayRowcount = matrix.length > 10 ? 10 : matrix.length;
       for (let i = 0; i < dislpayRowcount; i++) {
-        console.log(matrix[i][0], matrix[i][1]);
+        top10[i][0] = matrix[i][0];
+        top10[i][1] = matrix[i][1];
       }
+      console.log(table(top10));
     }
     process.exit();
   });
