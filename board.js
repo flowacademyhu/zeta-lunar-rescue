@@ -34,11 +34,14 @@ const printMatrix = (arr) => {
         term.bgBlue(' ' + ' ');
       } else if (arr[i][j] === constanses.EXPLOSION) {
         term.bgRed(' ' + ' ');
-      } else if (arr[i][j] === 'C') {
+      } else if (arr[i][j] === constanses.EXPLOSION2) {
         term.bgColorRgb(140, 13, 13, '  ');
-      } else if (arr[i][j] === 'D') {
+      } else if (arr[i][j] === constanses.EXPLOSION3) {
         term.bgColorRgb(66, 3, 3, '  ');
-      } else if (arr[i][j] === 'P') {
+      } else if (arr[i][j] === constanses.GUN) {
+        term.bgBlack();
+        term.white('+' + ' ');
+      } else if (arr[i][j] === constanses.GUN2) {
         term.bgBlack();
         term.white('+' + ' ');
       } else if (arr[i][j] === 'T') {

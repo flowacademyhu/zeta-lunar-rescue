@@ -4,6 +4,7 @@ const QUIT = 'q';
 const START = 's';
 const LEFT = 'a';
 const RIGHT = 'd';
+const SHOOT = 'l';
 const BACKGROUND = 0;
 const SPACESHIP = 'S';
 const MOTHERSHIP = 'M';
@@ -13,6 +14,8 @@ const MAX_ENEMY_SPACESHIPS = 6;
 const EXPLOSION = 'B';
 const EXPLOSION2 = 'C';
 const EXPLOSION3 = 'D';
+const GUN = 'P';
+const GUN2 = 'O';
 const LANDING_TARGET = 'T';
 
 module.exports = {
@@ -22,6 +25,7 @@ module.exports = {
   START,
   LEFT,
   RIGHT,
+  SHOOT,
   BACKGROUND,
   SPACESHIP,
   MOTHERSHIP,
@@ -31,5 +35,7 @@ module.exports = {
   EXPLOSION,
   EXPLOSION2,
   EXPLOSION3,
+  GUN,
+  GUN2,
   LANDING_TARGET
 };

@@ -1,5 +1,4 @@
 const constanses = require('./constanses');
-let expl = false;
 
 const MCounter = (arr) => {
   let count = 0;

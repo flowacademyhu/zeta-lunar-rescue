@@ -39,6 +39,12 @@ stdin.on('data', (key1) => {
     spaceship.spaceShipLeft(board, mothership.mothershipHeight);
   } else if (key1 === constanses.RIGHT) {
     spaceship.spaceShipRight(board, mothership.mothershipHeight);
+  } else if (key1 === constanses.SHOOT && gameMode === 'Fly') {
+    let startShootI = spaceshipFly.spaceshipSearchI(board) - 1;
+    let startShootJ = spaceshipFly.spaceshipSearchJ(board);
+    if (startShootI >= 0) {
+      board[startShootI][startShootJ] = constanses.GUN2;
+    }
   }
 });
 
@@ -60,6 +66,7 @@ const main = () => {
     spaceship.clearExplosions(board);
     spaceship.explosions2(board);
     spaceship.explosions(board);
+    spaceshipFly.spaceshipGun(board);
     mothership.move(board, constanses.BOARD_SIZE);
     let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
     let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
@@ -72,6 +79,7 @@ const main = () => {
       }
     } else {
       spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board));
+      spaceshipFly.spaceshipGun(board);
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
       projectiles.enemyProjectiles(board);
@@ -79,7 +87,6 @@ const main = () => {
 
     gameMode = enemySpaceships.changeGamemode(board);
     createBoard.printMatrix(board);
-    console.log(finishTarget1, finishTarget2, finishTarget3);
     console.log('iteration:', iteration);
     // console.log('Gamemode:', gameMode);
   }, 300);
