@@ -5,12 +5,11 @@ const save = (player, iteration) => {
     if (err) {
       return console.log(err);
     }
-
-    console.log('The file was saved!');
-    process.exit();
+    topScores();
   });
-  console.log(player);
-  console.log(iteration);
+  console.log('Player:', player);
+  console.log('Score:', iteration, '\n');
+  console.log('=== Top 10 ===');
 };
 
 const topScores = () => {
@@ -43,13 +42,11 @@ const topScores = () => {
       for (let i = 0; i < dislpayRowcount; i++) {
         console.log(matrix[i][0], matrix[i][1]);
       }
-      console.log(matrix);
     }
+    process.exit();
   });
 };
-topScores();
-console.log(topScores);
-
+// topScores();
 module.exports = {
   save: save,
   topScores: topScores
