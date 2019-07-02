@@ -1,6 +1,9 @@
-let mothershipDirection = 'right';
+const constanses = require('./constanses');
 
-const mshipLeft = (mothershipRow) => {
+let mothershipDirection = 'right';
+let mothershipHeight = 0;
+
+const mothershipLeft = (mothershipRow) => {
   if (mothershipDirection === 'left') {
     mothershipRow.shift();
     mothershipRow.push(0);
@@ -8,35 +11,36 @@ const mshipLeft = (mothershipRow) => {
 };
 
 const fillMothership = (board) => {
-  const mothershipRow = board[0];
-  for (let i = 0; i <= 5; i++) {
-    mothershipRow[i] = 'M';
+  const mothershipRow = board[mothershipHeight];
+  for (let i = 0; i < 5; i++) {
+    mothershipRow[i] = constanses.MOTHERSHIP;
   }
 };
 
-const mshipRight = (mothershipRow) => {
+const mothershipRight = (mothershipRow) => {
   if (mothershipDirection === 'right') {
     mothershipRow.unshift(0);
     mothershipRow.pop();
   }
 };
 
-const move = (board, boards) => {
-  const mothershipRow = board[0];
+const move = (board, boardSize) => {
+  const mothershipRow = board[mothershipHeight];
   if (mothershipDirection === 'right') {
-    mshipRight(mothershipRow);
+    mothershipRight(mothershipRow);
   } else {
-    mshipLeft(mothershipRow);
+    mothershipLeft(mothershipRow);
   }
-  if (mothershipRow[boards - 1] === 'M') {
+  if (mothershipRow[boardSize - 1] === constanses.MOTHERSHIP) {
     mothershipDirection = 'left';
   }
-  if (mothershipRow[0] === 'M') {
+  if (mothershipRow[0] === constanses.MOTHERSHIP) {
     mothershipDirection = 'right';
   }
 };
 
 module.exports = {
   move: move,
-  init: fillMothership
+  init: fillMothership,
+  mothershipHeight
 };

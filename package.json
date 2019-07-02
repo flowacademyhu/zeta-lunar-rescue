@@ -12,11 +12,16 @@
   },
   "author": "",
   "license": "ISC",
+  "bin": {
+    "lunar": "./index.js"
+  },
   "bugs": {
     "url": "https://github.com/flowacademyhu/zeta-lunar-rescue/issues"
   },
   "homepage": "https://github.com/flowacademyhu/zeta-lunar-rescue#readme",
   "dependencies": {
-    "axel": "0.0.3"
+    "axel": "0.0.3",
+    "readline-sync": "^1.4.9",
+    "terminal-kit": "^1.28.2"
   }
 }
