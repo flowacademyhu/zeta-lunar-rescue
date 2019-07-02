@@ -9,6 +9,7 @@ let spaceship = require('./spaceship-landing');
 let readline = require('readline-sync');
 let enemySpaceships = require('./enemy-spaceships');
 let projectiles = require('./projectiles');
+let { platform } = require('./landingplatform');
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let iteration = 0;
@@ -17,6 +18,10 @@ let player = readline.question('What is your name?');
 let gameMode = 'Landing';
 
 mothership.init(board);
+platform(board);
+let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
+let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
+board[startI][startJ] = 'S';
 
 let stdin = process.stdin;
 stdin.setRawMode(true);

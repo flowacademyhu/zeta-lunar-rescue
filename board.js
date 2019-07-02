@@ -33,7 +33,10 @@ const printMatrix = (arr) => {
       } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
         term.bgBlue(' ' + ' ');
       } else if (arr[i][j] === 'P') {
-        term.bgBlack('+' + ' ');
+        term.bgBlack();
+        term.white('+' + ' ');
+      } else if (arr[i][j] === 'T') {
+        term.bgBrightMagenta(' ' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');
       }
