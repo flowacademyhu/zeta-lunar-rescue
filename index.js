@@ -2,6 +2,7 @@ const mothership = require('./mothership');
 let createBoard = require('./array.js');
 let asteroid = require('./asteroids.js');
 let spaceship = require('./spaceship-landing.js');
+let { platform } = require('./landingplatform');
 
 const BOARD_SIZE = 50;
 const MAX_ASTEROID = 8;
@@ -9,7 +10,7 @@ let board = createBoard.fill2DArray(createBoard.generate2d(BOARD_SIZE));
 let iteration = 0;
 
 mothership.init(board);
-
+platform(board);
 let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
 let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
 board[startI][startJ] = 'S';
