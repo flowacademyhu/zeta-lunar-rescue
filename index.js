@@ -6,6 +6,7 @@ const constanses = require('./constanses');
 let createBoard = require('./board');
 let asteroid = require('./asteroids');
 let spaceship = require('./spaceship-landing');
+let spaceshipFly = require('./spaceship-fly-up');
 let readline = require('readline-sync');
 let enemySpaceships = require('./enemy-spaceships');
 let projectiles = require('./projectiles');
@@ -17,6 +18,26 @@ let gameEnd = false;
 let gameStart = false;
 let player = readline.question('What is your name?');
 let gameMode = 'Landing';
+let life = 4;
+
+// board[20][0] = 'Q';
+// board[39][0] = 'Q';
+// board[20][39] = 'Q';
+// board[39][39] = 'Q';
+
+board[38][10] = 'T';
+board[38][11] = 'T';
+board[38][12] = 'T';
+board[38][13] = 'T';
+board[39][11] = 'T';
+board[39][12] = 'T';
+
+board[38][1] = 'T';
+board[38][2] = 'T';
+board[38][3] = 'T';
+board[38][4] = 'T';
+board[39][2] = 'T';
+board[39][3] = 'T';
 
 mothership.init(board);
 platform(board);
@@ -57,26 +78,30 @@ const main = () => {
       scoreboard.save(player, iteration);
     }
     console.clear();
-
     iteration++;
-    spaceship.spaceShipLand(board, mothership.mothershipHeight);
+    spaceship.explosions(board);
     mothership.move(board, constanses.BOARD_SIZE);
+    let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
+    let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
+    let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
     if (gameMode === 'Landing') {
+      spaceship.spaceShipLand(board, mothership.mothershipHeight);
       asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
       if (iteration % 2 === 0) {
         asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
       }
     } else {
+      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3);
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
       projectiles.enemyProjectiles(board);
     }
 
     gameMode = enemySpaceships.changeGamemode(board);
-
     createBoard.printMatrix(board);
+    console.log(finishTarget1, finishTarget2, finishTarget3);
     console.log('iteration:', iteration);
-    console.log('Gamemode:', gameMode);
+    // console.log('Gamemode:', gameMode);
   }, 300);
 };
 

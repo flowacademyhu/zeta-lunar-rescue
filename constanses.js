@@ -10,6 +10,8 @@ const MOTHERSHIP = 'M';
 const ASTEROID_LEFT = 7;
 const ASTEROID_RIGHT = 'X';
 const MAX_ENEMY_SPACESHIPS = 6;
+const EXPLOSION = 'B';
+const LANDING_TARGET = 'T';
 
 module.exports = {
   BOARD_SIZE,
@@ -23,5 +25,7 @@ module.exports = {
   MOTHERSHIP,
   ASTEROID_LEFT,
   ASTEROID_RIGHT,
-  MAX_ENEMY_SPACESHIPS
+  MAX_ENEMY_SPACESHIPS,
+  EXPLOSION,
+  LANDING_TARGET
 };

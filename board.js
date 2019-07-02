@@ -25,13 +25,15 @@ const printMatrix = (arr) => {
       if (arr[i][j] === constanses.BACKGROUND) {
         term.bgBlack(' ' + ' ');
       } else if (arr[i][j] === constanses.SPACESHIP) {
-        term.bgYellow(' ' + ' ');
+        term.bgGreen(' ' + ' ');
       } else if (arr[i][j] === constanses.MOTHERSHIP) {
         term.bgYellow(' ' + ' ');
       } else if (arr[i][j] === constanses.ASTEROID_LEFT || arr[i][j] === constanses.ASTEROID_RIGHT) {
-        term.bgRed(' ' + ' ');
+        term.bgColorRgb(210, 105, 30, '  ');
       } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
         term.bgBlue(' ' + ' ');
+      } else if (arr[i][j] === constanses.EXPLOSION) {
+        term.bgRed(' ' + ' ');
       } else if (arr[i][j] === 'P') {
         term.bgBlack();
         term.white('+' + ' ');
