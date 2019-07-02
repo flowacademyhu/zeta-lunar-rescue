@@ -57,6 +57,8 @@ const main = () => {
     }
     console.clear();
     iteration++;
+    spaceship.clearExplosions(board);
+    spaceship.explosions2(board);
     spaceship.explosions(board);
     mothership.move(board, constanses.BOARD_SIZE);
     let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));

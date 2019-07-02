@@ -11,6 +11,8 @@ const ASTEROID_LEFT = 7;
 const ASTEROID_RIGHT = 'X';
 const MAX_ENEMY_SPACESHIPS = 6;
 const EXPLOSION = 'B';
+const EXPLOSION2 = 'C';
+const EXPLOSION3 = 'D';
 const LANDING_TARGET = 'T';
 
 module.exports = {
@@ -27,5 +29,7 @@ module.exports = {
   ASTEROID_RIGHT,
   MAX_ENEMY_SPACESHIPS,
   EXPLOSION,
+  EXPLOSION2,
+  EXPLOSION3,
   LANDING_TARGET
 };

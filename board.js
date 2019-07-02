@@ -34,6 +34,10 @@ const printMatrix = (arr) => {
         term.bgBlue(' ' + ' ');
       } else if (arr[i][j] === constanses.EXPLOSION) {
         term.bgRed(' ' + ' ');
+      } else if (arr[i][j] === 'C') {
+        term.bgColorRgb(140, 13, 13, '  ');
+      } else if (arr[i][j] === 'D') {
+        term.bgColorRgb(66, 3, 3, '  ');
       } else if (arr[i][j] === 'P') {
         term.bgBlack();
         term.white('+' + ' ');
