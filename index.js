@@ -1,57 +1,73 @@
-const mothership = require('./mothership');
-const scoreboard = require('./scoreboard.js');
-let createBoard = require('./array.js');
-let asteroid = require('./asteroids.js');
-let spaceship = require('./spaceship-landing.js');
-let readline = require('readline-sync');
+#!/usr/bin/env node
 
-const BOARD_SIZE = 45;
-const MAX_ASTEROID = 8;
-let board = createBoard.fill2DArray(createBoard.generate2d(BOARD_SIZE));
+const mothership = require('./mothership');
+const scoreboard = require('./scoreboard');
+const constanses = require('./constanses');
+let createBoard = require('./board');
+let asteroid = require('./asteroids');
+let spaceship = require('./spaceship-landing');
+let readline = require('readline-sync');
+let enemySpaceships = require('./enemy-spaceships');
+let projectiles = require('./projectiles');
+
+let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let iteration = 0;
+let gameStart = false;
 let player = readline.question('What is your name?');
+let gameMode = 'Landing';
 
 mothership.init(board);
-
-let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
-let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
-board[startI][startJ] = 'S';
 
 let stdin = process.stdin;
 stdin.setRawMode(true);
 stdin.resume();
 stdin.setEncoding('utf-8');
 stdin.on('data', (key1) => {
-  if (key1 === 'q') {
+  if (key1 === constanses.QUIT) {
     scoreboard.save(player, iteration);
-  } else if (key1 === 'a') {
-    spaceship.spaceShipLeft(board, startI);
-  } else if (key1 === 'd') {
-    spaceship.spaceShipRight(board, startI);
+  } else if (key1 === constanses.START && gameStart === false) {
+    let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
+    let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
+    board[startI][startJ] = constanses.SPACESHIP;
+    gameStart = true;
+  } else if (key1 === constanses.LEFT) {
+    spaceship.spaceShipLeft(board, mothership.mothershipHeight);
+  } else if (key1 === constanses.RIGHT) {
+    spaceship.spaceShipRight(board, mothership.mothershipHeight);
   }
 });
 
-board[15][12] = 7;
-board[17][15] = 7;
-board[10][16] = 7;
-board[6][2] = 'X';
-board[18][15] = 'X';
-board[21][25] = 'X';
+board[15][12] = constanses.ASTEROID_LEFT;
+board[17][15] = constanses.ASTEROID_LEFT;
+board[10][16] = constanses.ASTEROID_LEFT;
+board[6][2] = constanses.ASTEROID_RIGHT;
+board[18][15] = constanses.ASTEROID_RIGHT;
+board[21][25] = constanses.ASTEROID_RIGHT;
 
 const main = () => {
   setInterval(function () {
     console.clear();
 
     iteration++;
-    spaceship.spaceShipLand(board, startI);
-    asteroid.asteroidLeft(board, BOARD_SIZE, MAX_ASTEROID);
-    mothership.move(board, BOARD_SIZE);
-    if (iteration % 2 === 0) {
-      asteroid.asteroidRight(board, BOARD_SIZE, MAX_ASTEROID);
+    spaceship.spaceShipLand(board, mothership.mothershipHeight);
+    mothership.move(board, constanses.BOARD_SIZE);
+    if (gameMode === 'Landing') {
+      asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+      if (iteration % 2 === 0) {
+        asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+      }
+    } else {
+      enemySpaceships.clearAsteroids(board);
+      enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
+      projectiles.enemyProjectiles(board);
     }
+
+    gameMode = enemySpaceships.changeGamemode(board);
+
     createBoard.printMatrix(board);
     console.log('iteration:', iteration);
-  }, 500);
+    console.log('Gamemode:', gameMode);
+  }, 300);
 };
 
 main();

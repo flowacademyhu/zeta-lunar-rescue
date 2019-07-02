@@ -1,6 +1,7 @@
+const constanses = require('./constanses');
 let term = require('terminal-kit').terminal;
 
-const generate2d = (n) => {
+const generateBoard = (n) => {
   let arr = new Array(n);
   for (let i = 0; i < n; i++) {
     arr[i] = new Array(n);
@@ -8,45 +9,31 @@ const generate2d = (n) => {
   return arr;
 };
 
-const fill2DArray = (tomb) => {
+const fillBoard = (tomb) => {
   for (let i = 0; i < tomb.length; i++) {
     for (let j = 0; j < tomb[i].length; j++) {
-      tomb[i][j] = 0;
+      tomb[i][j] = constanses.BACKGROUND;
     }
   }
   return tomb;
-};
-
-const randomSorGenerator = () => {
-  let m; let n; let k;
-  m = 2 + Math.floor(Math.random() * 14);
-  do {
-    n = 2 + Math.floor(Math.random() * 14);
-  } while (m === n);
-
-  do {
-    k = 2 + Math.floor(Math.random() * 14);
-  } while (m === k || k === n);
-
-  let arr = [];
-  arr.push(m);
-  arr.push(n);
-  arr.push(k);
-  return arr;
 };
 
 const printMatrix = (arr) => {
   console.clear();
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 0) {
+      if (arr[i][j] === constanses.BACKGROUND) {
         term.bgBlack(' ' + ' ');
-      } else if (arr[i][j] === 'S') {
+      } else if (arr[i][j] === constanses.SPACESHIP) {
         term.bgYellow(' ' + ' ');
-      } else if (arr[i][j] === 'M') {
+      } else if (arr[i][j] === constanses.MOTHERSHIP) {
         term.bgYellow(' ' + ' ');
-      } else if (arr[i][j] === 7 || arr[i][j] === 'X') {
+      } else if (arr[i][j] === constanses.ASTEROID_LEFT || arr[i][j] === constanses.ASTEROID_RIGHT) {
         term.bgRed(' ' + ' ');
+      } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
+        term.bgBlue(' ' + ' ');
+      } else if (arr[i][j] === 'P') {
+        term.bgBlack('+' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');
       }
@@ -59,8 +46,7 @@ const printMatrix = (arr) => {
 };
 
 module.exports = {
-  randomSorGenerator,
-  generate2d,
-  fill2DArray,
+  generateBoard,
+  fillBoard,
   printMatrix
 };
