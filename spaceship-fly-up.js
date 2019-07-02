@@ -1,90 +1,30 @@
-const spaceShipLeft = (arr, startI) => {
-  let indI = 0;
-  let indJ = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 'S') {
+const constanses = require('./constanses');
+
+const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3) => {
+  let indI = -1;
+  let indJ = -1;
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (board[i][j] === constanses.SPACESHIP) {
         indI = i;
         indJ = j;
       }
     }
   }
-  if (indI > startI) {
-    if (indI === arr.length - 3) {
-      arr[indI][indJ] = 'S';
-    } else if (indJ === 0) {
-      arr[indI][indJ] = 'S';
-    } else {
-      arr[indI][indJ - 1] = 'S';
-      arr[indI][indJ] = 0;
-    }
+  if (indI > 1 && board[indI - 1][indJ] === constanses.BACKGROUND) {
+    board[indI - 1][indJ] = constanses.SPACESHIP;
+    board[indI][indJ] = constanses.BACKGROUND;
+  } else if (indI > 1 && board[indI - 1][indJ] !== constanses.BACKGROUND) {
+    board[indI - 1][indJ] = constanses.EXPLOSION;
+    board[indI][indJ] = constanses.BACKGROUND;
+  } else if (indI === 1 && indJ !== finishTarget1 && indJ !== finishTarget2 && indJ !== finishTarget3) {
+    board[indI - 1][indJ] = constanses.EXPLOSION;
+    board[indI][indJ] = constanses.BACKGROUND;
+  } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2 || indJ === finishTarget3)) {
+    board[indI][indJ] = constanses.BACKGROUND;
   }
 };
-
-const spaceShipRight = (arr, startI) => {
-  let indI = 0;
-  let indJ = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 'S') {
-        indI = i;
-        indJ = j;
-      }
-    }
-  }
-  if (indI > startI) {
-    if (indI === arr.length - 3) {
-      arr[indI][indJ] = 'S';
-    } else if (indJ === arr[2].length - 1) {
-      arr[indI][indJ] = 'S';
-    } else {
-      arr[indI][indJ + 1] = 'S';
-      arr[indI][indJ] = 0;
-    }
-  }
-};
-
-const spaceShipLand = (arr, startI) => {
-  let indI = 0;
-  let indJ = 0;
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 'S') {
-        indI = i;
-        indJ = j;
-      }
-    }
-  }
-  if (indI === arr.length - 3) {
-    arr[indI][indJ] = 'S';
-  } else if (indI > startI) {
-    arr[indI + 1][indJ] = 'S';
-    arr[indI][indJ] = 0;
-  } else if (indI === startI) {
-    arr[indI + 1][indJ] = 'S';
-    arr[indI][indJ] = 'M';
-  }
-};
-
-// let szamlalo = 0;
-
-/* const main = () => {
-    var interval = setInterval(function () {
-      console.clear();
-      szamlalo++;
-      spaceShipLand(board);
-      matrixKiiratas(board);
-      console.log('Szamlalo:', szamlalo);
-    }, 600);
-  };
-
-  main(); */
 
 module.exports = {
-  MCounter,
-  spaceShipLand,
-  spaceShipLeft,
-  spaceShipRight,
-  motherShipSearchI,
-  motherShipSearchJ
+  spaceShipFly
 };
