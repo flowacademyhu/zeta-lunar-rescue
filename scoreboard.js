@@ -77,6 +77,8 @@ const topScores = () => {
         top10[i][0] = matrix[i][0];
         top10[i][1] = matrix[i][1];
       }
+      console.log('\n');
+      console.log('  ========== TOP 10 =========');
       let i = 0;
       setInterval(() => {
         stream.write([top10[i][0], top10[i][1]]);
