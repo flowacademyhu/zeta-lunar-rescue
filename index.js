@@ -9,9 +9,12 @@ let spaceship = require('./spaceship-landing');
 let spaceshipFly = require('./spaceship-fly-up');
 let readline = require('readline-sync');
 let enemySpaceships = require('./enemy-spaceships');
+let projectiles = require('./projectiles');
+let { platform } = require('./landingplatform');
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let iteration = 0;
+let gameEnd = false;
 let gameStart = false;
 let player = readline.question('What is your name?');
 let gameMode = 'Landing';
@@ -37,6 +40,10 @@ board[39][2] = 'T';
 board[39][3] = 'T';
 
 mothership.init(board);
+platform(board);
+let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
+let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
+board[startI][startJ] = 'S';
 
 let stdin = process.stdin;
 stdin.setRawMode(true);
@@ -44,7 +51,7 @@ stdin.resume();
 stdin.setEncoding('utf-8');
 stdin.on('data', (key1) => {
   if (key1 === constanses.QUIT) {
-    scoreboard.save(player, iteration);
+    gameEnd = true;
   } else if (key1 === constanses.START && gameStart === false) {
     let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
     let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
@@ -65,7 +72,11 @@ board[18][15] = constanses.ASTEROID_RIGHT;
 board[21][25] = constanses.ASTEROID_RIGHT;
 
 const main = () => {
-  setInterval(function () {
+  let interval = setInterval(function () {
+    if (gameEnd === true) {
+      clearInterval(interval);
+      scoreboard.save(player, iteration);
+    }
     console.clear();
     iteration++;
     spaceship.explosions(board);
@@ -83,6 +94,7 @@ const main = () => {
       spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3);
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
+      projectiles.enemyProjectiles(board);
     }
 
     gameMode = enemySpaceships.changeGamemode(board);
