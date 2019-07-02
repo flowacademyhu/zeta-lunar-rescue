@@ -13,6 +13,7 @@ let { platform } = require('./landingplatform');
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let iteration = 0;
+let gameEnd = false;
 let gameStart = false;
 let player = readline.question('What is your name?');
 let gameMode = 'Landing';
@@ -29,7 +30,7 @@ stdin.resume();
 stdin.setEncoding('utf-8');
 stdin.on('data', (key1) => {
   if (key1 === constanses.QUIT) {
-    scoreboard.save(player, iteration);
+    gameEnd = true;
   } else if (key1 === constanses.START && gameStart === false) {
     let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
     let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
@@ -50,7 +51,11 @@ board[18][15] = constanses.ASTEROID_RIGHT;
 board[21][25] = constanses.ASTEROID_RIGHT;
 
 const main = () => {
-  setInterval(function () {
+  let interval = setInterval(function () {
+    if (gameEnd === true) {
+      clearInterval(interval);
+      scoreboard.save(player, iteration);
+    }
     console.clear();
 
     iteration++;

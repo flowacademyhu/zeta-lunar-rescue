@@ -1,4 +1,37 @@
 const fs = require('fs');
+const { table, createStream } = require('table');
+
+let config,
+  stream;
+
+config = {
+  columnDefault: {
+    width: 50
+  },
+  columnCount: 2,
+  columns: {
+    0: { width: 20
+    },
+    1: {
+      width: 5
+    }
+  }
+};
+
+stream = createStream(config);
+
+const generateArray = (n, m) => {
+  let arr = new Array(n);
+  for (let i = 0; i < n; i++) {
+    arr[i] = new Array(m);
+  }
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      arr[i][j] = ' ';
+    }
+  }
+  return arr;
+};
 
 const save = (player, iteration) => {
   fs.appendFile('./scoreboard.txt', `${player} ${iteration} \n`, function (err) {
@@ -38,15 +71,23 @@ const topScores = () => {
           }
         }
       }
+      let top10 = generateArray(10, 2);
       const dislpayRowcount = matrix.length > 10 ? 10 : matrix.length;
       for (let i = 0; i < dislpayRowcount; i++) {
-        console.log(matrix[i][0], matrix[i][1]);
+        top10[i][0] = matrix[i][0];
+        top10[i][1] = matrix[i][1];
       }
+      let i = 0;
+      setInterval(() => {
+        stream.write([top10[i][0], top10[i][1]]);
+        if (i === 9) {
+          process.exit();
+        }
+        i++;
+      }, 500);
     }
-    process.exit();
   });
 };
-// topScores();
 module.exports = {
   save: save,
   topScores: topScores
