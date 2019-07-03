@@ -4,6 +4,7 @@ const QUIT = 'q';
 const START = 's';
 const LEFT = 'a';
 const RIGHT = 'd';
+const UP = 'w';
 const SHOOT = 'l';
 const BACKGROUND = 0;
 const SPACESHIP = 'S';
@@ -25,6 +26,7 @@ module.exports = {
   START,
   LEFT,
   RIGHT,
+  UP,
   SHOOT,
   BACKGROUND,
   SPACESHIP,
