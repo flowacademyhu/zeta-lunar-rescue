@@ -12,14 +12,23 @@ let enemySpaceships = require('./enemy-spaceships');
 let projectiles = require('./projectiles');
 let { platform } = require('./landingplatform');
 
+let game = {
+  iteration: 0,
+  gameEnd: false,
+  gameStart: false,
+  slower: false,
+  gameMode: 'Landing',
+  life: 4
+};
+
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
-let iteration = 0;
-let gameEnd = false;
-let gameStart = false;
-let slower = false;
 let player = readline.question('What is your name?');
-let gameMode = 'Landing';
-let life = 4;
+// let iteration = 0;
+// let gameEnd = false;
+// let gameStart = false;
+// let slower = false;
+// let gameMode = 'Landing';
+// let life = 4;
 
 mothership.init(board);
 platform(board);
@@ -30,31 +39,31 @@ stdin.resume();
 stdin.setEncoding('utf-8');
 stdin.on('data', (key1) => {
   if (key1 === constanses.QUIT) {
-    gameEnd = true;
-  } else if (key1 === constanses.START && gameStart === false) {
+    game.gameEnd = true;
+  } else if (key1 === constanses.START && game.gameStart === false) {
     let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
     let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
     board[startI][startJ] = constanses.SPACESHIP;
-    gameStart = true;
+    game.gameStart = true;
   } else if (key1 === constanses.LEFT) {
     spaceship.spaceShipLeft(board, mothership.mothershipHeight);
   } else if (key1 === constanses.RIGHT) {
     spaceship.spaceShipRight(board, mothership.mothershipHeight);
-  } else if (key1 === constanses.SHOOT && gameMode === 'Fly') {
+  } else if (key1 === constanses.SHOOT && game.gameMode === 'Fly') {
     let startShootI = spaceshipFly.spaceshipSearchI(board) - 1;
     let startShootJ = spaceshipFly.spaceshipSearchJ(board);
     if (startShootI >= 0) {
       board[startShootI][startShootJ] = constanses.GUN2;
     }
   } else if (key1 === constanses.UP) {
-    if (gameMode === 'Landing') {
-      slower = true;
+    if (game.gameMode === 'Landing') {
+      game.slower = true;
     }
-    if (gameMode === 'Fly') {
+    if (game.gameMode === 'Fly') {
       let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
       let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
       let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
-      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board));
+      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
     }
   }
 });
@@ -68,12 +77,12 @@ board[21][25] = constanses.ASTEROID_RIGHT;
 
 const main = () => {
   let interval = setInterval(function () {
-    if (gameEnd === true) {
+    if (game.gameEnd === true) {
       clearInterval(interval);
-      scoreboard.save(player, iteration);
+      scoreboard.save(player, game.iteration);
     }
     console.clear();
-    iteration++;
+    game.iteration++;
     spaceship.clearExplosions(board);
     spaceship.explosions2(board);
     spaceship.explosions(board);
@@ -82,28 +91,28 @@ const main = () => {
     let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
     let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
     let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
-    if (gameMode === 'Landing') {
-      if (slower === true && iteration % 2 === 0) {
+    if (game.gameMode === 'Landing') {
+      if (game.slower === true && game.iteration % 2 === 0) {
         spaceship.spaceShipLand(board, mothership.mothershipHeight);
-        slower = false;
-      } else if (slower === false && iteration % 1 === 0) {
+        game.slower = false;
+      } else if (game.slower === false && game.iteration % 1 === 0) {
         spaceship.spaceShipLand(board, mothership.mothershipHeight);
       }
       asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
-      if (iteration % 2 === 0) {
+      if (game.iteration % 2 === 0) {
         asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
       }
     } else {
-      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board));
+      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
       spaceshipFly.spaceshipGun(board);
       enemySpaceships.clearAsteroids(board);
       enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
       projectiles.enemyProjectiles(board);
     }
 
-    gameMode = enemySpaceships.changeGamemode(board);
+    enemySpaceships.changeGamemode(board, game);
     createBoard.printMatrix(board);
-    console.log('iteration:', iteration);
+    console.log('iteration:', game.iteration);
     // console.log('Gamemode:', gameMode);
   }, 300);
 };

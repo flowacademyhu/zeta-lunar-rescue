@@ -1,6 +1,6 @@
 const constanses = require('./constanses');
 
-const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mothershipCount) => {
+const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mothershipCount, game) => {
   let indI = -1;
   let indJ = -1;
   for (let i = 0; i < board.length; i++) {
@@ -25,8 +25,12 @@ const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mother
     board[indI][indJ] = constanses.BACKGROUND;
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2 || indJ === finishTarget3) && mothershipCount % 2 !== 0) {
     board[indI][indJ] = constanses.BACKGROUND;
+    game.gameMode = 'Landing';
+    game.gameStart = false;
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2) && mothershipCount % 2 === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
+    game.gameMode = 'Landing';
+    game.gameStart = false;
   }
 };
 
