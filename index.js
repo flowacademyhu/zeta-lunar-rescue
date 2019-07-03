@@ -3,6 +3,7 @@
 const mothership = require('./mothership');
 const scoreboard = require('./scoreboard');
 const constanses = require('./constanses');
+const { gameOver } = require('./gameover');
 let createBoard = require('./board');
 let asteroid = require('./asteroids');
 let spaceship = require('./spaceship-landing');
@@ -12,45 +13,50 @@ let enemySpaceships = require('./enemy-spaceships');
 let projectiles = require('./projectiles');
 let { platform } = require('./landingplatform');
 
-let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
-let iteration = 0;
-let gameEnd = false;
-let gameStart = false;
-let player = readline.question('What is your name?');
-let gameMode = 'Landing';
-let life = 4;
-
-mothership.init(board);
-platform(board);
-
-let stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf-8');
-stdin.on('data', (key1) => {
-  if (key1 === constanses.QUIT) {
-    gameEnd = true;
-  } else if (key1 === constanses.START && gameStart === false) {
-    let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
-    let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
-    board[startI][startJ] = constanses.SPACESHIP;
-    gameStart = true;
-  } else if (key1 === constanses.LEFT) {
-    spaceship.spaceShipLeft(board, mothership.mothershipHeight);
-  } else if (key1 === constanses.RIGHT) {
-    spaceship.spaceShipRight(board, mothership.mothershipHeight);
-  }
-});
-
-board[15][12] = constanses.ASTEROID_LEFT;
-board[17][15] = constanses.ASTEROID_LEFT;
-board[10][16] = constanses.ASTEROID_LEFT;
-board[6][2] = constanses.ASTEROID_RIGHT;
-board[18][15] = constanses.ASTEROID_RIGHT;
-board[21][25] = constanses.ASTEROID_RIGHT;
-
 const main = () => {
+  let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
+  let iteration = 0;
+  let gameEnd = false;
+  let gameStart = false;
+  let player = readline.question('What is your name?');
+  let gameMode = 'Landing';
+  let life = 4;
+
+  mothership.init(board);
+  platform(board);
+
+  board[15][12] = constanses.ASTEROID_LEFT;
+  board[17][15] = constanses.ASTEROID_LEFT;
+  board[10][16] = constanses.ASTEROID_LEFT;
+  board[6][2] = constanses.ASTEROID_RIGHT;
+  board[18][15] = constanses.ASTEROID_RIGHT;
+  board[21][25] = constanses.ASTEROID_RIGHT;
+
+  let stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.resume();
+  stdin.setEncoding('utf-8');
+  stdin.on('data', (key1) => {
+    if (key1 === constanses.QUIT) {
+      gameEnd = true;
+    } else if (key1 === constanses.START && gameStart === false) {
+      let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
+      let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
+      board[startI][startJ] = constanses.SPACESHIP;
+      gameStart = true;
+    } else if (key1 === constanses.LEFT) {
+      spaceship.spaceShipLeft(board, mothership.mothershipHeight);
+    } else if (key1 === constanses.RIGHT) {
+      spaceship.spaceShipRight(board, mothership.mothershipHeight);
+    }
+  });
+
   let interval = setInterval(function () {
+    if (iteration === 10) {
+      scoreboard.save(player, iteration);
+      gameOver();
+      clearInterval(interval);
+    }
     if (gameEnd === true) {
       clearInterval(interval);
       scoreboard.save(player, iteration);
