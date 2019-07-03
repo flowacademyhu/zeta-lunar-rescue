@@ -82,8 +82,11 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
 let spaceshipCount = 0;
 
 const changeGamemode = (board, game) => {
-  let indI = -8;
+  let indI = -1;
   const LANDING_ROW = board.length - 3;
+  if (game.died > 0) {
+    game.died--;
+  }
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       if (board[i][j] === constanses.SPACESHIP) {
@@ -94,9 +97,10 @@ const changeGamemode = (board, game) => {
   if (indI === LANDING_ROW) {
     spaceshipCount++;
   }
-  if (spaceshipCount > 1 && indI !== -8) {
+  if (spaceshipCount > 1 && indI !== -1) {
     game.gameMode = 'Fly';
-  } else if (spaceshipCount > 1 && indI === -8) {
+  } else if (spaceshipCount > 1 && indI === -1 && game.died === 0 && game.life > 0) {
+    game.gameStart = false;
     game.gameMode = 'Landing';
     spaceshipCount = 0;
     board[15][12] = constanses.ASTEROID_LEFT;
@@ -105,7 +109,13 @@ const changeGamemode = (board, game) => {
     board[6][2] = constanses.ASTEROID_RIGHT;
     board[18][15] = constanses.ASTEROID_RIGHT;
     board[21][25] = constanses.ASTEROID_RIGHT;
-  }
+  } else if (spaceshipCount >= 0 && indI === -1 && game.died === 0 && game.life > 0) {
+    game.gameStart = false;
+    game.gameMode = 'Landing';
+    spaceshipCount = 0;
+  } /* else if (game.life > 0) {
+    gameOver()
+  } */
 };
 
 module.exports = {

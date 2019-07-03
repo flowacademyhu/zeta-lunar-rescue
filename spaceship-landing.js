@@ -36,7 +36,7 @@ const motherShipSearchJ = (arr, MCount) => {
   return startJ;
 };
 
-const spaceShipLeft = (arr, startI) => {
+const spaceShipLeft = (arr, startI, game) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -58,11 +58,15 @@ const spaceShipLeft = (arr, startI) => {
     } else if (arr[indI][indJ - 1] !== constanses.BACKGROUND) {
       arr[indI][indJ - 1] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     }
   }
 };
 
-const spaceShipRight = (arr, startI) => {
+const spaceShipRight = (arr, startI, game) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -84,11 +88,15 @@ const spaceShipRight = (arr, startI) => {
     } else if (arr[indI][indJ + 1] !== constanses.BACKGROUND) {
       arr[indI][indJ + 1] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     }
   }
 };
 
-const spaceShipLand = (arr, startI) => {
+const spaceShipLand = (arr, startI, game) => {
   let indI = -1;
   let indJ = -1;
   for (let i = 0; i < arr.length; i++) {
@@ -108,6 +116,10 @@ const spaceShipLand = (arr, startI) => {
     } else if (indI === arr.length - 2 || arr[indI + 1][indJ] !== constanses.BACKGROUND) {
       arr[indI + 1][indJ] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     }
   } else if (indI === startI) {
     arr[indI + 1][indJ] = constanses.SPACESHIP;

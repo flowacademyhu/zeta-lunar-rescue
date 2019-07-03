@@ -17,22 +17,36 @@ const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mother
   } else if (indI > 1 && board[indI - 1][indJ] !== constanses.BACKGROUND) {
     board[indI - 1][indJ] = constanses.EXPLOSION;
     board[indI][indJ] = constanses.BACKGROUND;
+    game.died = 6;
+    if (game.life !== 0) {
+      game.life--;
+    }
   } else if (indI === 1 && indJ !== finishTarget1 && indJ !== finishTarget2 && indJ !== finishTarget3 && mothershipCount % 2 !== 0) {
     board[indI - 1][indJ] = constanses.EXPLOSION;
     board[indI][indJ] = constanses.BACKGROUND;
+    game.died = 6;
+    if (game.life !== 0) {
+      game.life--;
+    }
   } else if (indI === 1 && indJ !== finishTarget1 && indJ !== finishTarget2 && mothershipCount % 2 === 0) {
     board[indI - 1][indJ] = constanses.EXPLOSION;
     board[indI][indJ] = constanses.BACKGROUND;
+    game.died = 6;
+    if (game.life !== 0) {
+      game.life--;
+    }
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2 || indJ === finishTarget3) && mothershipCount % 2 !== 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    game.gameMode = 'Landing';
-    game.gameStart = false;
     game.score++;
+    if (game.timeInterval < 900) {
+      game.timeInterval = game.timeInterval + 50;
+    }
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2) && mothershipCount % 2 === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    game.gameMode = 'Landing';
-    game.gameStart = false;
     game.score++;
+    if (game.timeInterval < 900) {
+      game.timeInterval = game.timeInterval + 50;
+    }
   }
 };
 
@@ -89,9 +103,17 @@ const spaceshipGun = (board) => {
   }
 };
 
+const lifeLoss = (game) => {
+  game.died = 6;
+  if (game.life !== 0) {
+    game.life--;
+  }
+};
+
 module.exports = {
   spaceShipFly,
   spaceshipSearchI,
   spaceshipSearchJ,
-  spaceshipGun
+  spaceshipGun,
+  lifeLoss
 };
