@@ -53,7 +53,7 @@ const printMatrix = (arr) => {
     console.log();
   }
   console.log();
-  term.yellow('Life: 85');
+  // term.yellow('Life: 85');
   console.log();
 };
 

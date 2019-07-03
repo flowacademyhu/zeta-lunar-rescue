@@ -27,10 +27,12 @@ const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mother
     board[indI][indJ] = constanses.BACKGROUND;
     game.gameMode = 'Landing';
     game.gameStart = false;
+    game.score++;
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2) && mothershipCount % 2 === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
     game.gameMode = 'Landing';
     game.gameStart = false;
+    game.score++;
   }
 };
 

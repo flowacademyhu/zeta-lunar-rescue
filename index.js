@@ -18,7 +18,9 @@ let game = {
   gameStart: false,
   slower: false,
   gameMode: 'Landing',
-  life: 4
+  life: 3,
+  score: 0,
+  timeInterval: 300
 };
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
@@ -92,6 +94,7 @@ const main = () => {
     let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
     let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
     if (game.gameMode === 'Landing') {
+      asteroid.clearEnemySpanceships(board);
       if (game.slower === true && game.iteration % 2 === 0) {
         spaceship.spaceShipLand(board, mothership.mothershipHeight);
         game.slower = false;
@@ -112,9 +115,10 @@ const main = () => {
 
     enemySpaceships.changeGamemode(board, game);
     createBoard.printMatrix(board);
-    console.log('iteration:', game.iteration);
-    // console.log('Gamemode:', gameMode);
-  }, 300);
+    // console.log('iteration:', game.iteration);
+    console.log('score: ', game.score);
+    console.log('Gamemode:', game.gameMode);
+  }, game.timeInterval);
 };
 
 main();
