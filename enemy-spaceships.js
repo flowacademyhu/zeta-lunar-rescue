@@ -97,9 +97,9 @@ const changeGamemode = (board, game) => {
   if (indI === LANDING_ROW) {
     spaceshipCount++;
   }
-  if (spaceshipCount > 1 && indI !== -1) {
+  if (spaceshipCount > 2 && indI !== -1) { // Ha a length - 3. sorban az iterációk száma > 2, és van Spaceship
     game.gameMode = 'Fly';
-  } else if (spaceshipCount > 1 && indI === -1 && game.died === 0 && game.life > 0) {
+  } else if (spaceshipCount > 2 && indI === -1 && game.died === 0 && game.life > 0) {
     game.gameStart = false;
     game.gameMode = 'Landing';
     spaceshipCount = 0;
@@ -109,7 +109,7 @@ const changeGamemode = (board, game) => {
     board[6][2] = constanses.ASTEROID_RIGHT;
     board[18][15] = constanses.ASTEROID_RIGHT;
     board[21][25] = constanses.ASTEROID_RIGHT;
-  } else if (spaceshipCount >= 0 && indI === -1 && game.died === 0 && game.life > 0) {
+  } else if (spaceshipCount >= 0 && spaceshipCount <= 2 && indI === -1 && game.died === 0 && game.life > 0) {
     game.gameStart = false;
     game.gameMode = 'Landing';
     spaceshipCount = 0;
