@@ -30,7 +30,7 @@ const printMatrix = (arr) => {
         term.bgYellow(' ' + ' ');
       } else if (arr[i][j] === constanses.ASTEROID_LEFT || arr[i][j] === constanses.ASTEROID_RIGHT) {
         term.bgColorRgb(210, 105, 30, '  ');
-      } else if (arr[i][j] === 'U' || arr[i][j] === 'F') {
+      } else if (arr[i][j] === constanses.ENEMY_SPACESHIP_LEFT || arr[i][j] === constanses.ENEMY_SPACESHIP_RIGHT) {
         term.bgBlue(' ' + ' ');
       } else if (arr[i][j] === constanses.EXPLOSION) {
         term.bgRed(' ' + ' ');
@@ -44,7 +44,7 @@ const printMatrix = (arr) => {
       } else if (arr[i][j] === constanses.GUN2) {
         term.bgBlack();
         term.white('+' + ' ');
-      } else if (arr[i][j] === 'T') {
+      } else if (arr[i][j] === constanses.LANDING_TARGET) {
         term.bgBrightMagenta(' ' + ' ');
       } else {
         process.stdout.write(arr[i][j] + ' ');

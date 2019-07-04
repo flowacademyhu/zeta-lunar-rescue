@@ -1,3 +1,5 @@
+let constanses = require('./constanses');
+
 const random = (boardLength) => {
   return Math.floor(Math.random() * (boardLength - 3));
 };
@@ -24,6 +26,18 @@ const platform = (board) => {
   board[board.length - 1][b + 2] = 'T';
 };
 
+const clearPlatform = (board) => {
+  const platformRow = board[board.length - 2];
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < platformRow.length; j++) {
+      if (board[i][j] === constanses.LANDING_TARGET) {
+        board[i][j] = 0;
+      }
+    }
+  }
+};
+
 module.exports = {
-  platform: platform
+  platform: platform,
+  clearPlatform
 };

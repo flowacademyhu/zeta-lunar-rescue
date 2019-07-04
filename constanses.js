@@ -18,6 +18,8 @@ const EXPLOSION3 = 'D';
 const GUN = 'P';
 const GUN2 = 'O';
 const LANDING_TARGET = 'T';
+const ENEMY_SPACESHIP_LEFT = 'U';
+const ENEMY_SPACESHIP_RIGHT = 'F';
 
 module.exports = {
   BOARD_SIZE,
@@ -39,5 +41,7 @@ module.exports = {
   EXPLOSION3,
   GUN,
   GUN2,
-  LANDING_TARGET
+  LANDING_TARGET,
+  ENEMY_SPACESHIP_LEFT,
+  ENEMY_SPACESHIP_RIGHT
 };
