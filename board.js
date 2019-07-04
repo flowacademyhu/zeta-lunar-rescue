@@ -53,8 +53,6 @@ const printMatrix = (arr) => {
     console.log();
   }
   console.log();
-  // term.yellow('Life: 85');
-  console.log();
 };
 
 module.exports = {
