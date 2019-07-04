@@ -37,13 +37,13 @@ const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mother
     }
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2 || indJ === finishTarget3) && mothershipCount % 2 !== 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    game.score++;
+    game.score += 100;
     if (game.timeInterval < 900) {
       game.timeInterval = game.timeInterval + 50;
     }
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2) && mothershipCount % 2 === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    game.score++;
+    game.score += 100;
     if (game.timeInterval < 900) {
       game.timeInterval = game.timeInterval + 50;
     }
