@@ -23,7 +23,7 @@ let game = {
   slower: false,
   faster: false,
   gameMode: 'Landing',
-  life: 1,
+  life: 5,
   score: 0,
   timeInterval: 700,
   died: 0,

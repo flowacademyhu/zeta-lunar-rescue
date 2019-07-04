@@ -1,4 +1,5 @@
 const constanses = require('./constanses');
+const { clearMothership, init } = require('./mothership');
 
 const fiftyFifty = () => {
   return Math.floor(Math.random() * 2);
@@ -102,6 +103,8 @@ const changeGamemode = (board, game) => {
   } else if (spaceshipCount > 2 && indI === -1 && game.died === 0 && game.life > 0) {
     game.gameStart = false;
     game.gameMode = 'Landing';
+    clearMothership(board);
+    init(board);
     spaceshipCount = 0;
     board[15][12] = constanses.ASTEROID_LEFT;
     board[17][15] = constanses.ASTEROID_LEFT;

@@ -1,4 +1,5 @@
 const constanses = require('./constanses');
+const { clearMothership, init } = require('./mothership');
 
 const MCounter = (arr) => {
   let count = 0;
@@ -91,6 +92,8 @@ const spaceShipRight = (arr, startI, game) => {
       game.died = 6;
       if (game.life !== 0) {
         game.life--;
+        clearMothership(arr);
+        init(arr);
       }
     }
   }
