@@ -3,6 +3,7 @@
 const mothership = require('./mothership');
 const scoreboard = require('./scoreboard');
 const constanses = require('./constanses');
+const { gameOver } = require('./gameover');
 let createBoard = require('./board');
 let asteroid = require('./asteroids');
 let spaceship = require('./spaceship-landing');
@@ -24,7 +25,8 @@ let game = {
   life: 1,
   score: 0,
   timeInterval: 700,
-  died: 0
+  died: 0,
+  countDowner: 4
 };
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
@@ -32,6 +34,13 @@ let player = readline.question('What is your name?');
 
 mothership.init(board);
 platform(board);
+
+board[15][12] = constanses.ASTEROID_LEFT;
+board[17][15] = constanses.ASTEROID_LEFT;
+board[10][16] = constanses.ASTEROID_LEFT;
+board[6][2] = constanses.ASTEROID_RIGHT;
+board[18][15] = constanses.ASTEROID_RIGHT;
+board[21][25] = constanses.ASTEROID_RIGHT;
 
 let stdin = process.stdin;
 stdin.setRawMode(true);
@@ -65,18 +74,12 @@ stdin.on('data', (key1) => {
   }
 });
 
-board[15][12] = constanses.ASTEROID_LEFT;
-board[17][15] = constanses.ASTEROID_LEFT;
-board[10][16] = constanses.ASTEROID_LEFT;
-board[6][2] = constanses.ASTEROID_RIGHT;
-board[18][15] = constanses.ASTEROID_RIGHT;
-board[21][25] = constanses.ASTEROID_RIGHT;
-
 const main = () => {
   if (game.gameEnd === true) {
-    clearTimeout();
     scoreboard.save(player, game.iteration);
+    process.exit();
   }
+
   console.clear();
   game.iteration++;
   spaceship.clearExplosions(board);
@@ -123,9 +126,9 @@ const main = () => {
   enemySpaceships.changeGamemode(board, game);
   createBoard.printMatrix(board);
   // console.log('iteration:', game.iteration);
-  // console.log('score: ', game.score);
+  console.log('score: ', game.score);
   console.log('life: ', game.life);
-  console.log('Time Interval: ', game.timeInterval);
+  // console.log('Time Interval: ', game.timeInterval);
   // console.log('Gamemode:', game.gameMode);
   let time = 1000;
   const timer = () => {
@@ -135,9 +138,13 @@ const main = () => {
     } else if (game.life > 0) {
       main();
     } else if (game.life === 0) {
-      console.clear();
-      console.log('game over');
-      // time = 0;
+      game.countDowner--;
+      if (game.countDowner > 0) {
+        main();
+      } else {
+        scoreboard.save(player, game.iteration);
+        gameOver();
+      }
     }
   };
   timer();
