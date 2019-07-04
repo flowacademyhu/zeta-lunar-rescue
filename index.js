@@ -16,19 +16,19 @@ let game = {
   iteration: 0,
   gameEnd: false,
   gameStart: false,
+  left: false,
+  right: false,
   slower: false,
+  faster: false,
   gameMode: 'Landing',
-  life: 4
+  life: 1,
+  score: 0,
+  timeInterval: 700,
+  died: 0
 };
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let player = readline.question('What is your name?');
-// let iteration = 0;
-// let gameEnd = false;
-// let gameStart = false;
-// let slower = false;
-// let gameMode = 'Landing';
-// let life = 4;
 
 mothership.init(board);
 platform(board);
@@ -46,9 +46,9 @@ stdin.on('data', (key1) => {
     board[startI][startJ] = constanses.SPACESHIP;
     game.gameStart = true;
   } else if (key1 === constanses.LEFT) {
-    spaceship.spaceShipLeft(board, mothership.mothershipHeight);
+    game.left = true;
   } else if (key1 === constanses.RIGHT) {
-    spaceship.spaceShipRight(board, mothership.mothershipHeight);
+    game.right = true;
   } else if (key1 === constanses.SHOOT && game.gameMode === 'Fly') {
     let startShootI = spaceshipFly.spaceshipSearchI(board) - 1;
     let startShootJ = spaceshipFly.spaceshipSearchJ(board);
@@ -60,10 +60,7 @@ stdin.on('data', (key1) => {
       game.slower = true;
     }
     if (game.gameMode === 'Fly') {
-      let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
-      let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
-      let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
-      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
+      game.faster = true;
     }
   }
 });
@@ -76,45 +73,74 @@ board[18][15] = constanses.ASTEROID_RIGHT;
 board[21][25] = constanses.ASTEROID_RIGHT;
 
 const main = () => {
-  let interval = setInterval(function () {
-    if (game.gameEnd === true) {
-      clearInterval(interval);
-      scoreboard.save(player, game.iteration);
+  if (game.gameEnd === true) {
+    clearTimeout();
+    scoreboard.save(player, game.iteration);
+  }
+  console.clear();
+  game.iteration++;
+  spaceship.clearExplosions(board);
+  spaceship.explosions2(board);
+  spaceship.explosions(board);
+  mothership.move(board, constanses.BOARD_SIZE);
+  let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
+  let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
+  let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
+  if (game.left === true) {
+    spaceship.spaceShipLeft(board, mothership.mothershipHeight, game);
+    game.left = false;
+  }
+  if (game.right === true) {
+    spaceship.spaceShipRight(board, mothership.mothershipHeight, game);
+    game.right = false;
+  }
+  spaceshipFly.spaceshipGun(board);
+  spaceshipFly.spaceshipGun(board);
+  if (game.gameMode === 'Landing') {
+    asteroid.clearEnemySpanceships(board);
+    if (game.slower === false) {
+      spaceship.spaceShipLand(board, mothership.mothershipHeight, game);
+    } else if (game.slower === true && game.iteration % 2 === 0) {
+      spaceship.spaceShipLand(board, mothership.mothershipHeight, game);
     }
-    console.clear();
-    game.iteration++;
-    spaceship.clearExplosions(board);
-    spaceship.explosions2(board);
-    spaceship.explosions(board);
-    spaceshipFly.spaceshipGun(board);
-    mothership.move(board, constanses.BOARD_SIZE);
-    let finishTarget1 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
-    let finishTarget2 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) - 1;
-    let finishTarget3 = spaceship.motherShipSearchJ(board, spaceship.MCounter(board)) + 1;
-    if (game.gameMode === 'Landing') {
-      if (game.slower === true && game.iteration % 2 === 0) {
-        spaceship.spaceShipLand(board, mothership.mothershipHeight);
-        game.slower = false;
-      } else if (game.slower === false && game.iteration % 1 === 0) {
-        spaceship.spaceShipLand(board, mothership.mothershipHeight);
-      }
-      asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
-      if (game.iteration % 2 === 0) {
-        asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
-      }
-    } else {
+    asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+    if (game.iteration % 2 === 0) {
+      asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+    }
+  } else if (game.gameMode === 'Fly') {
+    enemySpaceships.clearAsteroids(board);
+    if (game.faster === true) {
       spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
-      spaceshipFly.spaceshipGun(board);
-      enemySpaceships.clearAsteroids(board);
-      enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
-      projectiles.enemyProjectiles(board);
+      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
+    } else if (game.faster === false) {
+      spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
     }
-
-    enemySpaceships.changeGamemode(board, game);
-    createBoard.printMatrix(board);
-    console.log('iteration:', game.iteration);
-    // console.log('Gamemode:', gameMode);
-  }, 300);
+    enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
+    projectiles.enemyProjectiles(board, game);
+  }
+  game.slower = false;
+  game.faster = false;
+  enemySpaceships.changeGamemode(board, game);
+  createBoard.printMatrix(board);
+  // console.log('iteration:', game.iteration);
+  // console.log('score: ', game.score);
+  console.log('life: ', game.life);
+  console.log('Time Interval: ', game.timeInterval);
+  // console.log('Gamemode:', game.gameMode);
+  let time = 1000;
+  const timer = () => {
+    if (time > 0) {
+      time -= game.timeInterval;
+      setTimeout(timer, time);
+    } else if (game.life > 0) {
+      main();
+    } else if (game.life === 0) {
+      console.clear();
+      console.log('game over');
+      // time = 0;
+    }
+  };
+  timer();
 };
 
 main();

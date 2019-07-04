@@ -63,7 +63,18 @@ const asteroidRight = (board, boardSize, maxAsteroid) => {
   }
 };
 
+const clearEnemySpanceships = (board) => {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (board[i][j] === 'F' || board[i][j] === 'U' || board[i][j] === constanses.GUN) {
+        board[i][j] = constanses.BACKGROUND;
+      }
+    }
+  }
+};
+
 module.exports = {
   asteroidLeft,
-  asteroidRight
+  asteroidRight,
+  clearEnemySpanceships
 };
