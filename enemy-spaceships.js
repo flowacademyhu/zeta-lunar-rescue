@@ -1,5 +1,6 @@
 const constanses = require('./constanses');
 const { clearMothership, init } = require('./mothership');
+const { asteroidInit } = require('./asteroids');
 
 const fiftyFifty = () => {
   return Math.floor(Math.random() * 2);
@@ -8,21 +9,21 @@ const fiftyFifty = () => {
 const clearAsteroids = (board) => {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 'X' || board[i][j] === 7) {
+      if (board[i][j] === constanses.ASTEROID_LEFT || board[i][j] === constanses.ASTEROID_RIGHT) {
         board[i][j] = 0;
       }
     }
   }
 };
 
-const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
+const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize, game) => {
   let temp;
   let leftSpaceshipCount = 0;
   let rightSpaceshipCount = 0;
   let tempArray = [];
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 'U') {
+      if (board[i][j] === constanses.ENEMY_SPACESHIP_LEFT) {
         tempArray.push(i);
         tempArray.push(j);
         leftSpaceshipCount++;
@@ -34,7 +35,14 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
     let i = tempArray.pop();
     if (j === board[0].length - 1) {
       board[i][j] = 0;
-    } else if (board[i][j + 1] === 'F') {
+    } else if (board[i][j + 1] === constanses.ENEMY_SPACESHIP_RIGHT) {
+    } else if (board[i][j + 1] === constanses.SPACESHIP) {
+      board[i][j] = constanses.BACKGROUND;
+      board[i][j + 1] = constanses.EXPLOSION;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     } else {
       temp = board[i][j + 1];
       board[i][j + 1] = board[i][j];
@@ -44,7 +52,7 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 'F') {
+      if (board[i][j] === constanses.ENEMY_SPACESHIP_RIGHT) {
         tempArray.push(i);
         tempArray.push(j);
         rightSpaceshipCount++;
@@ -56,6 +64,13 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
     let i = tempArray.pop();
     if (j === 0) {
       board[i][j] = 0;
+    } else if (board[i][j - 1] === constanses.SPACESHIP) {
+      board[i][j] = constanses.BACKGROUND;
+      board[i][j - 1] = constanses.EXPLOSION;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     } else {
       temp = board[i][j - 1];
       board[i][j - 1] = board[i][j];
@@ -69,13 +84,13 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
     for (let index = 0; index < 3; index++) {
       let i = 2 + Math.floor(Math.random() * (boardSize - 6));
       let j = Math.floor(Math.random() * (board[0].length - 1));
-      fiftyFifty() === 0 ? board[i][j] = 'U' : board[i][j] = 'F';
+      fiftyFifty() === 0 ? board[i][j] = constanses.ENEMY_SPACESHIP_LEFT : board[i][j] = constanses.ENEMY_SPACESHIP_RIGHT;
       spaceshipCount++;
     }
   }
   while (spaceshipCount < MAX_ENEMY_SPACESHIPS) {
     let i = 2 + Math.floor(Math.random() * (boardSize - 6));
-    fiftyFifty() === 0 ? board[i][0] = 'U' : board[i][board[0].length - 1] = 'F';
+    fiftyFifty() === 0 ? board[i][0] = constanses.ENEMY_SPACESHIP_LEFT : board[i][board[0].length - 1] = constanses.ENEMY_SPACESHIP_RIGHT;
     spaceshipCount++;
   }
 };
@@ -106,19 +121,12 @@ const changeGamemode = (board, game) => {
     clearMothership(board);
     init(board);
     spaceshipCount = 0;
-    board[15][12] = constanses.ASTEROID_LEFT;
-    board[17][15] = constanses.ASTEROID_LEFT;
-    board[10][16] = constanses.ASTEROID_LEFT;
-    board[6][2] = constanses.ASTEROID_RIGHT;
-    board[18][15] = constanses.ASTEROID_RIGHT;
-    board[21][25] = constanses.ASTEROID_RIGHT;
+    asteroidInit(board);
   } else if (spaceshipCount >= 0 && spaceshipCount <= 2 && indI === -1 && game.died === 0 && game.life > 0) {
     game.gameStart = false;
     game.gameMode = 'Landing';
     spaceshipCount = 0;
-  } /* else if (game.life > 0) {
-    gameOver()
-  } */
+  }
 };
 
 module.exports = {

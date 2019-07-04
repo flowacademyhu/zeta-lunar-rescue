@@ -38,14 +38,7 @@ let player = readline.question('What is your name?');
 
 mothership.init(board);
 platform(board);
-
-board[15][12] = constanses.ASTEROID_LEFT;
-board[17][15] = constanses.ASTEROID_LEFT;
-board[10][16] = constanses.ASTEROID_LEFT;
-board[6][2] = constanses.ASTEROID_RIGHT;
-board[18][15] = constanses.ASTEROID_RIGHT;
-board[21][25] = constanses.ASTEROID_RIGHT;
-
+asteroid.asteroidInit(board);
 keyPress(board, game);
 
 const main = () => {
@@ -80,9 +73,9 @@ const main = () => {
     } else if (game.slower === true) {
       game.slowCountdowner = 0;
     }
-    asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+    asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID, game);
     if (game.iteration % 2 === 0) {
-      asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+      asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID, game);
     }
   } else if (game.gameMode === 'Fly') {
     enemySpaceships.clearAsteroids(board);
@@ -92,7 +85,7 @@ const main = () => {
     } else if (game.faster === false) {
       spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
     }
-    enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
+    enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE, game);
     projectiles.enemyProjectiles(board, game);
   }
   if (game.slowCountdowner < 2) {

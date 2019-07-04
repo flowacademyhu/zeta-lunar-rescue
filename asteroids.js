@@ -1,6 +1,6 @@
 const constanses = require('./constanses');
 
-const asteroidLeft = (board, boardSize, maxAsteroid) => {
+const asteroidLeft = (board, boardSize, maxAsteroid, game) => {
   let temp;
   let numberOfAsteroids = 0;
   let tempArray = [];
@@ -19,20 +19,27 @@ const asteroidLeft = (board, boardSize, maxAsteroid) => {
     if (j === board[0].length - 1) {
       board[i][j] = constanses.BACKGROUND;
     } else if (board[i][j + 1] === constanses.ASTEROID_RIGHT) {
+    } else if (board[i][j + 1] === constanses.SPACESHIP) {
+      board[i][j] = constanses.BACKGROUND;
+      board[i][j + 1] = constanses.EXPLOSION;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     } else {
       temp = board[i][j + 1];
       board[i][j + 1] = board[i][j];
       board[i][j] = temp;
     }
   }
-  while (numberOfAsteroids < maxAsteroid) {
+  while (numberOfAsteroids < maxAsteroid / 2) {
     let i = 2 + Math.floor(Math.random() * (boardSize - 6));
     board[i][0] = constanses.ASTEROID_LEFT;
     numberOfAsteroids++;
   }
 };
 
-const asteroidRight = (board, boardSize, maxAsteroid) => {
+const asteroidRight = (board, boardSize, maxAsteroid, game) => {
   let numberOfAsteroids = 0;
   let tempArray = [];
   for (let i = 0; i < board.length; i++) {
@@ -50,13 +57,20 @@ const asteroidRight = (board, boardSize, maxAsteroid) => {
     let i = tempArray.pop();
     if (j === 0) {
       board[i][j] = constanses.BACKGROUND;
+    } else if (board[i][j - 1] === constanses.SPACESHIP) {
+      board[i][j] = constanses.BACKGROUND;
+      board[i][j - 1] = constanses.EXPLOSION;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     } else {
       temp = board[i][j - 1];
       board[i][j - 1] = board[i][j];
       board[i][j] = temp;
     }
   }
-  while (numberOfAsteroids < maxAsteroid) {
+  while (numberOfAsteroids < maxAsteroid / 2) {
     let i = 2 + Math.floor(Math.random() * (boardSize - 6));
     board[i][board[0].length - 1] = constanses.ASTEROID_RIGHT;
     numberOfAsteroids++;
@@ -73,8 +87,22 @@ const clearEnemySpanceships = (board) => {
   }
 };
 
+const asteroidInit = (board) => {
+  for (let index = 0; index < 3; index++) {
+    let i = 2 + Math.floor(Math.random() * (board.length - 6));
+    let j = 2 + Math.floor(Math.random() * (board.length - 6));
+    board[i][j] = constanses.ASTEROID_LEFT;
+  }
+  for (let index = 0; index < 3; index++) {
+    let i = 2 + Math.floor(Math.random() * (board.length - 6));
+    let j = 2 + Math.floor(Math.random() * (board.length - 6));
+    board[i][j] = constanses.ASTEROID_RIGHT;
+  }
+};
+
 module.exports = {
   asteroidLeft,
   asteroidRight,
-  clearEnemySpanceships
+  clearEnemySpanceships,
+  asteroidInit
 };
