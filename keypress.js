@@ -25,7 +25,7 @@ const keyPress = (board, game) => {
       if (startShootI >= 0) {
         board[startShootI][startShootJ] = constanses.GUN2;
       }
-    } else if (key1 === constanses.UP) {
+    } else if (key1 === constanses.UP && game.slowCountdowner === 2) {
       if (game.gameMode === 'Landing') {
         game.slower = true;
       }
