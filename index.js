@@ -142,6 +142,7 @@ const main = () => {
       if (game.countDowner > 0) {
         main();
       } else {
+        console.log('\n==== GAME OVER ====\n');
         scoreboard.save(player, game.iteration);
         gameOver();
       }
