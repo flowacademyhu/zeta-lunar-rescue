@@ -1,5 +1,4 @@
 const constanses = require('./constanses');
-let expl = false;
 
 const MCounter = (arr) => {
   let count = 0;
@@ -37,7 +36,7 @@ const motherShipSearchJ = (arr, MCount) => {
   return startJ;
 };
 
-const spaceShipLeft = (arr, startI) => {
+const spaceShipLeft = (arr, startI, game) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -59,11 +58,15 @@ const spaceShipLeft = (arr, startI) => {
     } else if (arr[indI][indJ - 1] !== constanses.BACKGROUND) {
       arr[indI][indJ - 1] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     }
   }
 };
 
-const spaceShipRight = (arr, startI) => {
+const spaceShipRight = (arr, startI, game) => {
   let indI = 0;
   let indJ = 0;
   for (let i = 0; i < arr.length; i++) {
@@ -85,11 +88,15 @@ const spaceShipRight = (arr, startI) => {
     } else if (arr[indI][indJ + 1] !== constanses.BACKGROUND) {
       arr[indI][indJ + 1] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     }
   }
 };
 
-const spaceShipLand = (arr, startI) => {
+const spaceShipLand = (arr, startI, game) => {
   let indI = -1;
   let indJ = -1;
   for (let i = 0; i < arr.length; i++) {
@@ -109,6 +116,10 @@ const spaceShipLand = (arr, startI) => {
     } else if (indI === arr.length - 2 || arr[indI + 1][indJ] !== constanses.BACKGROUND) {
       arr[indI + 1][indJ] = constanses.EXPLOSION;
       arr[indI][indJ] = constanses.BACKGROUND;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     }
   } else if (indI === startI) {
     arr[indI + 1][indJ] = constanses.SPACESHIP;
@@ -127,52 +138,62 @@ const explosions = (board) => {
       }
     }
   }
-  if (indI < board.length - 1 && indI > 0 && indJ < board[2].length - 1 && indJ > 0 && expl === false) {
+  if (indI < board.length - 1 && indI > 0 && indJ < board[2].length - 1 && indJ > 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI - 1][indJ - 1] = constanses.EXPLOSION;
-    board[indI - 1][indJ + 1] = constanses.EXPLOSION;
-    board[indI + 1][indJ - 1] = constanses.EXPLOSION;
-    board[indI + 1][indJ + 1] = constanses.EXPLOSION;
-    expl = true;
+    board[indI - 1][indJ - 1] = constanses.EXPLOSION2;
+    board[indI - 1][indJ + 1] = constanses.EXPLOSION2;
+    board[indI + 1][indJ - 1] = constanses.EXPLOSION2;
+    board[indI + 1][indJ + 1] = constanses.EXPLOSION2;
     // life--;
-  } else if (indI === board.length - 1 && indJ > 0 && indJ < board[2].length - 1 && expl === false) {
+  } else if (indI === board.length - 1 && indJ > 0 && indJ < board[2].length - 1) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI - 1][indJ - 1] = constanses.EXPLOSION;
-    board[indI - 1][indJ + 1] = constanses.EXPLOSION;
-    expl = true;
-  } else if (indI === 0 && indJ > 0 && indJ < board[2].length - 1 && expl === false) {
+    board[indI - 1][indJ - 1] = constanses.EXPLOSION2;
+    board[indI - 1][indJ + 1] = constanses.EXPLOSION2;
+  } else if (indI === 0 && indJ > 0 && indJ < board[2].length - 1) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI + 1][indJ - 1] = constanses.EXPLOSION;
-    board[indI + 1][indJ + 1] = constanses.EXPLOSION;
-    expl = true;
-  } else if (indJ === board[2].length - 1 && indI < board.length - 1 && indI > 0 && expl === false) {
+    board[indI + 1][indJ - 1] = constanses.EXPLOSION2;
+    board[indI + 1][indJ + 1] = constanses.EXPLOSION2;
+  } else if (indJ === board[2].length - 1 && indI < board.length - 1 && indI > 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI - 1][indJ - 1] = constanses.EXPLOSION;
-    board[indI + 1][indJ - 1] = constanses.EXPLOSION;
-    expl = true;
-  } else if (indJ === 0 && indI < board.length - 1 && indI > 0 && expl === false) {
+    board[indI - 1][indJ - 1] = constanses.EXPLOSION2;
+    board[indI + 1][indJ - 1] = constanses.EXPLOSION2;
+  } else if (indJ === 0 && indI < board.length - 1 && indI > 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI - 1][indJ + 1] = constanses.EXPLOSION;
-    board[indI + 1][indJ + 1] = constanses.EXPLOSION;
-    expl = true;
-  } else if (indI === board.length - 1 && indJ === 0 && expl === false) {
+    board[indI - 1][indJ + 1] = constanses.EXPLOSION2;
+    board[indI + 1][indJ + 1] = constanses.EXPLOSION2;
+  } else if (indI === board.length - 1 && indJ === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI - 1][indJ + 1] = constanses.EXPLOSION;
-    expl = true;
-  } else if (indI === board.length - 1 && indJ === board[2].length - 1 && expl === false) {
+    board[indI - 1][indJ + 1] = constanses.EXPLOSION2;
+  } else if (indI === board.length - 1 && indJ === board[2].length - 1) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI - 1][indJ - 1] = constanses.EXPLOSION;
-    expl = true;
-    /*   } else if (indI === 0 && indJ === 0 && expl === false) {
+    board[indI - 1][indJ - 1] = constanses.EXPLOSION2;
+    /*   } else if (indI === 0 && indJ === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI + 1][indJ + 1] = constanses.EXPLOSION;
-    expl = true; */
-  } else if (indI === 0 && indJ === board[2].length - 1 && expl === false) {
+    board[indI + 1][indJ + 1] = constanses.EXPLOSION2; */
+  } else if (indI === 0 && indJ === board[2].length - 1) {
     board[indI][indJ] = constanses.BACKGROUND;
-    board[indI + 1][indJ - 1] = constanses.EXPLOSION;
-    expl = true;
+    board[indI + 1][indJ - 1] = constanses.EXPLOSION2;
   }
-  return expl;
+};
+
+const explosions2 = (board) => {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (board[i][j] === constanses.EXPLOSION2) {
+        board[i][j] = constanses.EXPLOSION3;
+      }
+    }
+  }
+};
+
+const clearExplosions = (board) => {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (board[i][j] === constanses.EXPLOSION3) {
+        board[i][j] = constanses.BACKGROUND;
+      }
+    }
+  }
 };
 
 module.exports = {
@@ -182,5 +203,7 @@ module.exports = {
   spaceShipRight,
   motherShipSearchI,
   motherShipSearchJ,
-  explosions
+  explosions,
+  explosions2,
+  clearExplosions
 };
