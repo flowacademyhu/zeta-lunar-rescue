@@ -80,9 +80,9 @@ const main = () => {
     } else if (game.slower === true) {
       game.slowCountdowner = 0;
     }
-    asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+    asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID, game);
     if (game.iteration % 2 === 0) {
-      asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
+      asteroid.asteroidRight(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID, game);
     }
   } else if (game.gameMode === 'Fly') {
     enemySpaceships.clearAsteroids(board);
