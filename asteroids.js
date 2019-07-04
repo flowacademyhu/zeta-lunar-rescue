@@ -32,7 +32,7 @@ const asteroidLeft = (board, boardSize, maxAsteroid, game) => {
       board[i][j] = temp;
     }
   }
-  while (numberOfAsteroids < maxAsteroid) {
+  while (numberOfAsteroids < maxAsteroid / 2) {
     let i = 2 + Math.floor(Math.random() * (boardSize - 6));
     board[i][0] = constanses.ASTEROID_LEFT;
     numberOfAsteroids++;
@@ -70,7 +70,7 @@ const asteroidRight = (board, boardSize, maxAsteroid, game) => {
       board[i][j] = temp;
     }
   }
-  while (numberOfAsteroids < maxAsteroid) {
+  while (numberOfAsteroids < maxAsteroid / 2) {
     let i = 2 + Math.floor(Math.random() * (boardSize - 6));
     board[i][board[0].length - 1] = constanses.ASTEROID_RIGHT;
     numberOfAsteroids++;
@@ -87,8 +87,22 @@ const clearEnemySpanceships = (board) => {
   }
 };
 
+const asteroidInit = (board) => {
+  for (let index = 0; index < 3; index++) {
+    let i = 2 + Math.floor(Math.random() * (board.length - 6));
+    let j = 2 + Math.floor(Math.random() * (board.length - 6));
+    board[i][j] = constanses.ASTEROID_LEFT;
+  }
+  for (let index = 0; index < 3; index++) {
+    let i = 2 + Math.floor(Math.random() * (board.length - 6));
+    let j = 2 + Math.floor(Math.random() * (board.length - 6));
+    board[i][j] = constanses.ASTEROID_RIGHT;
+  }
+};
+
 module.exports = {
   asteroidLeft,
   asteroidRight,
-  clearEnemySpanceships
+  clearEnemySpanceships,
+  asteroidInit
 };

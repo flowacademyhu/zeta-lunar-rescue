@@ -38,14 +38,7 @@ let player = readline.question('What is your name?');
 
 mothership.init(board);
 platform(board);
-
-board[15][12] = constanses.ASTEROID_LEFT;
-board[17][15] = constanses.ASTEROID_LEFT;
-board[10][16] = constanses.ASTEROID_LEFT;
-board[6][2] = constanses.ASTEROID_RIGHT;
-board[18][15] = constanses.ASTEROID_RIGHT;
-board[21][25] = constanses.ASTEROID_RIGHT;
-
+asteroid.asteroidInit(board);
 keyPress(board, game);
 
 const main = () => {
