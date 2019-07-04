@@ -21,7 +21,7 @@ let game = {
   slower: false,
   faster: false,
   gameMode: 'Landing',
-  life: 5,
+  life: 1,
   score: 0,
   timeInterval: 700,
   died: 0
@@ -132,8 +132,12 @@ const main = () => {
     if (time > 0) {
       time -= game.timeInterval;
       setTimeout(timer, time);
-    } else {
+    } else if (game.life > 0) {
       main();
+    } else if (game.life === 0) {
+      console.clear();
+      console.log('game over');
+      // time = 0;
     }
   };
   timer();
