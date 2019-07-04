@@ -85,7 +85,7 @@ const main = () => {
     } else if (game.faster === false) {
       spaceshipFly.spaceShipFly(board, finishTarget1, finishTarget2, finishTarget3, spaceship.MCounter(board), game);
     }
-    enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
+    enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE, game);
     projectiles.enemyProjectiles(board, game);
   }
   if (game.slowCountdowner < 2) {

@@ -16,7 +16,7 @@ const clearAsteroids = (board) => {
   }
 };
 
-const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
+const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize, game) => {
   let temp;
   let leftSpaceshipCount = 0;
   let rightSpaceshipCount = 0;
@@ -36,6 +36,13 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
     if (j === board[0].length - 1) {
       board[i][j] = 0;
     } else if (board[i][j + 1] === 'F') {
+    } else if (board[i][j + 1] === constanses.SPACESHIP) {
+      board[i][j] = constanses.BACKGROUND;
+      board[i][j + 1] = constanses.EXPLOSION;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     } else {
       temp = board[i][j + 1];
       board[i][j + 1] = board[i][j];
@@ -57,6 +64,13 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize) => {
     let i = tempArray.pop();
     if (j === 0) {
       board[i][j] = 0;
+    } else if (board[i][j - 1] === constanses.SPACESHIP) {
+      board[i][j] = constanses.BACKGROUND;
+      board[i][j - 1] = constanses.EXPLOSION;
+      game.died = 6;
+      if (game.life !== 0) {
+        game.life--;
+      }
     } else {
       temp = board[i][j - 1];
       board[i][j - 1] = board[i][j];
