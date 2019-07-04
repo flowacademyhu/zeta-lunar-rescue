@@ -12,6 +12,7 @@ let readline = require('readline-sync');
 let enemySpaceships = require('./enemy-spaceships');
 let projectiles = require('./projectiles');
 let { platform } = require('./landingplatform');
+let { keyPress } = require('./keypress');
 
 let game = {
   iteration: 0,
@@ -44,37 +45,7 @@ board[6][2] = constanses.ASTEROID_RIGHT;
 board[18][15] = constanses.ASTEROID_RIGHT;
 board[21][25] = constanses.ASTEROID_RIGHT;
 
-let stdin = process.stdin;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf-8');
-stdin.on('data', (key1) => {
-  if (key1 === constanses.QUIT) {
-    game.gameEnd = true;
-  } else if (key1 === constanses.START && game.gameStart === false) {
-    let startI = spaceship.motherShipSearchI(board, spaceship.MCounter(board));
-    let startJ = spaceship.motherShipSearchJ(board, spaceship.MCounter(board));
-    board[startI][startJ] = constanses.SPACESHIP;
-    game.gameStart = true;
-  } else if (key1 === constanses.LEFT) {
-    game.left = true;
-  } else if (key1 === constanses.RIGHT) {
-    game.right = true;
-  } else if (key1 === constanses.SHOOT && game.gameMode === 'Fly') {
-    let startShootI = spaceshipFly.spaceshipSearchI(board) - 1;
-    let startShootJ = spaceshipFly.spaceshipSearchJ(board);
-    if (startShootI >= 0) {
-      board[startShootI][startShootJ] = constanses.GUN2;
-    }
-  } else if (key1 === constanses.UP) {
-    if (game.gameMode === 'Landing') {
-      game.slower = true;
-    }
-    if (game.gameMode === 'Fly') {
-      game.faster = true;
-    }
-  }
-});
+keyPress(board, game);
 
 const main = () => {
   if (game.gameEnd === true) {
@@ -146,8 +117,7 @@ const main = () => {
       } else {
         console.log('\n==== GAME OVER ====\n');
         scoreboard.save(player, game.iteration);
-        console.log(game);
-        gameOver(main, game, defaultGame);
+        gameOver(main, game, defaultGame, board);
       }
     }
   };

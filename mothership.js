@@ -12,7 +12,7 @@ const mothershipLeft = (mothershipRow) => {
 
 const fillMothership = (board) => {
   const mothershipRow = board[mothershipHeight];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i < 6; i++) {
     mothershipRow[i] = constanses.MOTHERSHIP;
   }
 };
@@ -39,8 +39,18 @@ const move = (board, boardSize) => {
   }
 };
 
+const clearMothership = (board) => {
+  const mothershipRow = board[mothershipHeight];
+  for (let i = 0; i < mothershipRow.length; i++) {
+    if (mothershipRow[i] === constanses.MOTHERSHIP) {
+      mothershipRow[i] = constanses.BACKGROUND;
+    }
+  }
+};
+
 module.exports = {
   move: move,
   init: fillMothership,
-  mothershipHeight
+  mothershipHeight,
+  clearMothership
 };
