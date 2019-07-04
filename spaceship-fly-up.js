@@ -40,7 +40,7 @@ const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mother
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2 || indJ === finishTarget3) && mothershipCount % 2 !== 0) {
     board[indI][indJ] = constanses.BACKGROUND;
     game.died = 6;
-    game.score++;
+    game.score += 100;
     clearPlatform(board);
     platform(board);
     if (game.timeInterval < 900) {
@@ -49,10 +49,10 @@ const spaceShipFly = (board, finishTarget1, finishTarget2, finishTarget3, mother
   } else if (indI === 1 && (indJ === finishTarget1 || indJ === finishTarget2) && mothershipCount % 2 === 0) {
     board[indI][indJ] = constanses.BACKGROUND;
     game.died = 6;
-    game.score++;
+    game.score += 100;
     clearPlatform(board);
     platform(board);
-    if (game.timeInterval < 950) {
+    if (game.timeInterval < 900) {
       game.timeInterval = game.timeInterval + 50;
     }
   }
