@@ -22,11 +22,12 @@ let game = {
   slower: false,
   faster: false,
   gameMode: 'Landing',
-  life: 1,
+  life: 4,
   score: 0,
   timeInterval: 700,
   died: 0,
-  countDowner: 4
+  countDowner: 4,
+  slowCountdowner: 2
 };
 
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
@@ -65,7 +66,7 @@ stdin.on('data', (key1) => {
       board[startShootI][startShootJ] = constanses.GUN2;
     }
   } else if (key1 === constanses.UP) {
-    if (game.gameMode === 'Landing') {
+    if (game.gameMode === 'Landing' && game.slowCountdowner === 2) {
       game.slower = true;
     }
     if (game.gameMode === 'Fly') {
@@ -103,8 +104,8 @@ const main = () => {
     asteroid.clearEnemySpanceships(board);
     if (game.slower === false) {
       spaceship.spaceShipLand(board, mothership.mothershipHeight, game);
-    } else if (game.slower === true && game.iteration % 2 === 0) {
-      spaceship.spaceShipLand(board, mothership.mothershipHeight, game);
+    } else if (game.slower === true) {
+      game.slowCountdowner = 0;
     }
     asteroid.asteroidLeft(board, constanses.BOARD_SIZE, constanses.MAX_ASTEROID);
     if (game.iteration % 2 === 0) {
@@ -120,6 +121,9 @@ const main = () => {
     }
     enemySpaceships.enemySpaceships(board, constanses.MAX_ENEMY_SPACESHIPS, constanses.BOARD_SIZE);
     projectiles.enemyProjectiles(board, game);
+  }
+  if (game.slowCountdowner < 2) {
+    game.slowCountdowner++;
   }
   game.slower = false;
   game.faster = false;
