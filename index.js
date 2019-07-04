@@ -29,6 +29,8 @@ let game = {
   countDowner: 4
 };
 
+let defaultGame = Object.assign({}, game);
+
 let board = createBoard.fillBoard(createBoard.generateBoard(constanses.BOARD_SIZE));
 let player = readline.question('What is your name?');
 
@@ -144,7 +146,8 @@ const main = () => {
       } else {
         console.log('\n==== GAME OVER ====\n');
         scoreboard.save(player, game.iteration);
-        gameOver();
+        console.log(game);
+        gameOver(main, game, defaultGame);
       }
     }
   };

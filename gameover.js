@@ -1,10 +1,18 @@
 let readline = require('readline-sync');
 let { topScores } = require('./scoreboard');
 
-const gameOver = () => {
+const restart = (main, game, defaultGame) => {
+  const keys = Object.keys(game);
+  for (let i = 0; i < keys.length; i++) {
+    game[keys[i]] = defaultGame[keys[i]];
+  }
+  main();
+};
+
+const gameOver = (main, game, defaultGame) => {
   let question = readline.keyIn('\nWhat would you like to do? \n [1] Restart \n [2] View Scoreboard \n [3] Quit');
   if (question === '1') {
-    // kell majd egy restart fgv. bástyák
+    restart(main, game, defaultGame);
   } else if (question === '3') {
     process.exit();
   } else if (question === '2') {
