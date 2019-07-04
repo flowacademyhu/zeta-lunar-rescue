@@ -9,7 +9,7 @@ const fiftyFifty = () => {
 const clearAsteroids = (board) => {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 'X' || board[i][j] === 7) {
+      if (board[i][j] === constanses.ASTEROID_LEFT || board[i][j] === constanses.ASTEROID_RIGHT) {
         board[i][j] = 0;
       }
     }
@@ -23,7 +23,7 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize, game) => {
   let tempArray = [];
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 'U') {
+      if (board[i][j] === constanses.ENEMY_SPACESHIP_LEFT) {
         tempArray.push(i);
         tempArray.push(j);
         leftSpaceshipCount++;
@@ -35,7 +35,7 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize, game) => {
     let i = tempArray.pop();
     if (j === board[0].length - 1) {
       board[i][j] = 0;
-    } else if (board[i][j + 1] === 'F') {
+    } else if (board[i][j + 1] === constanses.ENEMY_SPACESHIP_RIGHT) {
     } else if (board[i][j + 1] === constanses.SPACESHIP) {
       board[i][j] = constanses.BACKGROUND;
       board[i][j + 1] = constanses.EXPLOSION;
@@ -52,7 +52,7 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize, game) => {
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 'F') {
+      if (board[i][j] === constanses.ENEMY_SPACESHIP_RIGHT) {
         tempArray.push(i);
         tempArray.push(j);
         rightSpaceshipCount++;
@@ -84,13 +84,13 @@ const enemySpaceships = (board, MAX_ENEMY_SPACESHIPS, boardSize, game) => {
     for (let index = 0; index < 3; index++) {
       let i = 2 + Math.floor(Math.random() * (boardSize - 6));
       let j = Math.floor(Math.random() * (board[0].length - 1));
-      fiftyFifty() === 0 ? board[i][j] = 'U' : board[i][j] = 'F';
+      fiftyFifty() === 0 ? board[i][j] = constanses.ENEMY_SPACESHIP_LEFT : board[i][j] = constanses.ENEMY_SPACESHIP_RIGHT;
       spaceshipCount++;
     }
   }
   while (spaceshipCount < MAX_ENEMY_SPACESHIPS) {
     let i = 2 + Math.floor(Math.random() * (boardSize - 6));
-    fiftyFifty() === 0 ? board[i][0] = 'U' : board[i][board[0].length - 1] = 'F';
+    fiftyFifty() === 0 ? board[i][0] = constanses.ENEMY_SPACESHIP_LEFT : board[i][board[0].length - 1] = constanses.ENEMY_SPACESHIP_RIGHT;
     spaceshipCount++;
   }
 };
@@ -126,9 +126,7 @@ const changeGamemode = (board, game) => {
     game.gameStart = false;
     game.gameMode = 'Landing';
     spaceshipCount = 0;
-  } /* else if (game.life > 0) {
-    gameOver()
-  } */
+  }
 };
 
 module.exports = {
