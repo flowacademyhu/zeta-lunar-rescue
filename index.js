@@ -43,7 +43,7 @@ keyPress(board, game);
 
 const main = () => {
   if (game.gameEnd === true) {
-    scoreboard.save(player, game.iteration);
+    scoreboard.save(player, game.score);
     process.exit();
   }
 
@@ -113,7 +113,7 @@ const main = () => {
         main();
       } else {
         console.log('\n==== GAME OVER ====\n');
-        scoreboard.save(player, game.iteration);
+        scoreboard.save(player, game.score);
         gameOver(main, game, defaultGame, board);
       }
     }

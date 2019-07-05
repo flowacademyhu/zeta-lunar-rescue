@@ -33,14 +33,10 @@ const generateArray = (n, m) => {
   return arr;
 };
 
-const save = (player, iteration) => {
-  fs.appendFile('./scoreboard.txt', `${player} ${iteration} \n`, function (err) {
-    if (err) {
-      return console.log(err);
-    }
-  });
+const save = (player, score) => {
+  fs.appendFileSync('./scoreboard.txt', `${player} ${score} \n`);
   console.log('Player:', player);
-  console.log('Score:', iteration, '\n');
+  console.log('Score:', score, '\n');
   // console.log('=== Top 10 ===');
 };
 
@@ -65,6 +61,10 @@ const topScores = (gameover) => {
         let temp = matrix[j][1];
         matrix[j][1] = matrix[j + 1][1];
         matrix[j + 1][1] = temp;
+
+        let temp2 = matrix[j][0];
+        matrix[j][0] = matrix[j + 1][0];
+        matrix[j + 1][0] = temp2;
       }
     }
   }
