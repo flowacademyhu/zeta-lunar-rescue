@@ -24,7 +24,7 @@ const gameOver = (main, game, defaultGame, board) => {
   } else if (question === '3') {
     process.exit();
   } else if (question === '2') {
-    topScores(gameOver);
+    topScores(main, game, defaultGame, board, gameOver);
   } else {
     gameOver(main, game, defaultGame, board);
   }

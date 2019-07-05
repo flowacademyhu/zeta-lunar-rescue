@@ -40,7 +40,7 @@ const save = (player, score) => {
   // console.log('=== Top 10 ===');
 };
 
-const topScores = (gameover) => {
+const topScores = (main, game, defaultGame, board, gameover) => {
   let matrix = [];
   let data = fs.readFileSync('./scoreboard.txt', 'utf8');
   const lines = data.split('\n');
@@ -81,7 +81,7 @@ const topScores = (gameover) => {
     stream.write([top10[i][0], top10[i][1]]);
     if (i === 9) {
       clearInterval(interval);
-      gameover();
+      gameover(main, game, defaultGame, board);
     } else {
       i++;
     }
