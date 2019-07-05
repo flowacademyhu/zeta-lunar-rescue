@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/flowacademyhu/zeta-lunar-rescue.git"
   },
-  "author": "",
+  "author": "Veres Gábor, Pásztor Vilmos, Hetényi Kinga",
   "license": "ISC",
   "bin": {
     "zeta-lunar": "./index.js"
